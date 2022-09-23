@@ -5,10 +5,12 @@
 class Particle
 {
 public:
-	Particle(Vector3 Pos, Vector3 Vel);
+	Particle(Vector3 Pos, Vector3 Vel, Vector3 Acc);
 	~Particle();
 	void integrate(double t);
 private:
+
+	double damping = 0.999;
 	Vector3 vel;
 	Vector3 acc;
 	physx::PxTransform pose;

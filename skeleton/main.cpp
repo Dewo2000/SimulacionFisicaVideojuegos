@@ -56,9 +56,9 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 
-	p = new Particle(Vector3(1, 1, 0), Vector3(1, 0, 0));
+	p = new Particle(Vector3(10, 10, 0), Vector3(0, 0, 0),Vector3(1, -9.8, 0) );
 
-	}
+}
 
 
 // Function to configure what happens in each step of physics
