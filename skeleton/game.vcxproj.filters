@@ -11,6 +11,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="Proyectil.cpp" />
+    <ClCompile Include="Floor.cpp" />
+    <ClCompile Include="Esfera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -23,6 +26,9 @@
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="Particle.h" />
+    <ClInclude Include="Proyectil.h" />
+    <ClInclude Include="Floor.h" />
+    <ClInclude Include="Esfera.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

@@ -9,7 +9,6 @@ public:
 	~Particle();
 	void integrate(double t);
 private:
-
 	double damping = 0.999;
 	Vector3 vel;
 	Vector3 acc;

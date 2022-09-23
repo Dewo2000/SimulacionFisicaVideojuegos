@@ -8,6 +8,9 @@
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
 #include "Particle.h"
+#include "Proyectil.h"
+#include "Floor.h"
+#include "Esfera.h"
 
 #include <iostream>
 
@@ -30,7 +33,9 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 Particle* p;
-
+std::vector<Proyectil*> vP;
+Floor* f;
+Esfera* e;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -55,9 +60,8 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-
-	p = new Particle(Vector3(10, 10, 0), Vector3(0, 0, 0),Vector3(1, -9.8, 0) );
-
+	f = new Floor(Vector3(0, -10, 0));
+	e = new Esfera(Vector3(0, 20, -100));
 }
 
 
@@ -70,7 +74,7 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	p->integrate(t);
+	for (Proyectil* e : vP) e->integrate(t);
 }
 
 // Function to clean data
@@ -90,7 +94,9 @@ void cleanupPhysics(bool interactive)
 	
 	gFoundation->release();
 
-	delete p;
+	delete e;
+	delete f;
+	for (auto e : vP) delete e;
 	}
 
 // Function called when a key is pressed
@@ -106,6 +112,12 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		break;
 	}
+	case 'F':
+	{
+		vP.push_back(new Proyectil(GetCamera()->getEye(), 100 * GetCamera()->getDir(), Vector3(0, -3.391, 0)));
+		break;
+	}
+		
 	default:
 		break;
 	}
