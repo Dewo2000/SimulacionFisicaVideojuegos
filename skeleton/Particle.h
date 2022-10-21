@@ -8,6 +8,7 @@ public:
 	Particle(Vector3 Pos, Vector3 Vel, Vector3 Acc, float Size, float Opacity, Vector3 ColorRGB);
 	~Particle();
 	void integrate(double t);
+	bool isAlive() { return remainning_time > 0; };
 protected:
 	double damping = 0.999;
 	Vector3 vel;
@@ -17,7 +18,7 @@ protected:
 	float size;
 	Vector4 color;
 	float opacity;
-	double remainning_time;
+	double remainning_time=10;
 	//PxGeometryType typeGeometry;
 	//std::make_unique<RenderItem> renderItem;
 };

@@ -1,13 +1,12 @@
 #pragma once
 #include <iostream>
 #include"Particle.h"
-#include"ParticleGenerator.h"
+#include"UniformParticleGenerator.h"
 using namespace std;
 class ParticleSystem
 {
 public:
 	ParticleSystem();
-	~ParticleSystem();
 	void update(double t);
 	ParticleGenerator* getParticleGenerator(string name);
 	void generateFireworkSystem();

@@ -12,6 +12,7 @@
 #include "Floor.h"
 #include "Esfera.h"
 
+#include"ParticleSystem.h"
 #include <iostream>
 
 
@@ -34,8 +35,10 @@ PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 Particle* p;
 std::vector<Proyectil*> vP;
-Floor* f;
-Esfera* e;
+//Floor* f;
+//Esfera* e;
+ParticleSystem* pSym;
+
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -60,8 +63,10 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	f = new Floor(Vector3(0, -10, 0));
-	e = new Esfera(Vector3(0, 20, -100));
+	pSym = new ParticleSystem();
+	pSym->generateFireworkSystem();
+	//f = new Floor(Vector3(0, -10, 0));
+	//e = new Esfera(Vector3(0, 20, -100));
 }
 
 
@@ -74,6 +79,7 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+	pSym->update(t);
 	for (Proyectil* e : vP) e->integrate(t);
 }
 
@@ -94,8 +100,9 @@ void cleanupPhysics(bool interactive)
 	
 	gFoundation->release();
 
-	delete e;
-	delete f;
+	//delete e;
+	//delete f;
+	delete pSym;
 	for (auto e : vP) delete e;
 	}
 

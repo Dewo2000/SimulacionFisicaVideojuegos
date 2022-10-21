@@ -17,4 +17,6 @@ void Particle::integrate(double t)
 	pose.p += vel * t;
 	vel = vel * pow(damping, t) + acc * t;
 
+
+	remainning_time--;
 }
