@@ -1,7 +1,7 @@
 #include "Particle.h"
 using namespace physx;
-Particle::Particle(Vector3 Pos, Vector3 Vel,Vector3 Acc,float Size ,float Opacity ,Vector3 ColorRGB)
-	:vel(Vel),acc(Acc),size(Size),opacity(Opacity), color({ ColorRGB, opacity }){
+Particle::Particle(Vector3 Pos, Vector3 Vel,Vector3 Acc,float Size ,float Opacity ,Vector3 ColorRGB, double aliveTime)
+	:vel(Vel),acc(Acc),size(Size),opacity(Opacity), color({ ColorRGB, opacity }),remainning_time(aliveTime){
 	
 	pose = PxTransform(Pos);
 	renderItem = new RenderItem(CreateShape(PxSphereGeometry(size)), &pose,color);

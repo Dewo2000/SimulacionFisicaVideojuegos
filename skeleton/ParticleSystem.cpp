@@ -14,11 +14,12 @@ void ParticleSystem::update(double t)
 			_particles.push_back(p);
 		}
 	}
-	for (Particle* p : _particles) {
-		p->integrate(t);
-		if (!p->isAlive())
-			delete p;
-			
+	for (int i = 0; i < _particles.size(); i++) {
+		_particles[i]->integrate(t);
+		if (!_particles[i]->isAlive()) {
+			delete _particles[i];
+			_particles.erase(_particles.begin() + i);
+		}
 	}
 }
 
@@ -29,7 +30,7 @@ ParticleGenerator* ParticleSystem::getParticleGenerator(string name)
 
 void ParticleSystem::generateFireworkSystem()
 {
-	UniformParticleGenerator* fPG = new UniformParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 10,10,10 }, { 10,10,10 });
+	GaussianParticleGenerator* fPG = new GaussianParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 10,10,10 }, { 10,10,10 });
 	_particle_generators.push_back(fPG);
 
 }

@@ -5,7 +5,7 @@
 class Particle
 {
 public:
-	Particle(Vector3 Pos, Vector3 Vel, Vector3 Acc, float Size, float Opacity, Vector3 ColorRGB);
+	Particle(Vector3 Pos, Vector3 Vel, Vector3 Acc, float Size, float Opacity, Vector3 ColorRGB , double aliveTime);
 	~Particle();
 	void integrate(double t);
 	bool isAlive() { return remainning_time > 0; };
@@ -18,7 +18,7 @@ protected:
 	float size;
 	Vector4 color;
 	float opacity;
-	double remainning_time=10;
+	double remainning_time;
 	//PxGeometryType typeGeometry;
 	//std::make_unique<RenderItem> renderItem;
 };

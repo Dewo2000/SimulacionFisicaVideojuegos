@@ -1,8 +1,6 @@
 #include "UniformParticleGenerator.h"
 
 
-
-
 UniformParticleGenerator::UniformParticleGenerator(Vector3 pos, Vector3 vel, Vector3 posWidth, Vector3 velWidth)
 {
     _name = "Uniforme";
@@ -32,7 +30,7 @@ vector<Particle*> UniformParticleGenerator::generateParticles()
             Vector3 pos = Vector3(px(random_generator), py(random_generator), pz(random_generator));
             Vector3 vel = Vector3(px(random_generator), py(random_generator), pz(random_generator));
 
-            vP.push_back(new Particle(pos, vel, { 0,0,0 }, 1, 1, { 0,1,0 }));
+            vP.push_back(new Particle(pos, vel, { 0,-10,0 }, 1, 1, { 0,1,0 },100));
         }
     }
     return vP;

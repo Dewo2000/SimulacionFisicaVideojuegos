@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include"Particle.h"
+#include"GaussianParticleGenerator.h"
 #include"UniformParticleGenerator.h"
 using namespace std;
 class ParticleSystem

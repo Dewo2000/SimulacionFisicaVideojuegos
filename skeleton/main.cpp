@@ -80,7 +80,7 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 	pSym->update(t);
-	for (Proyectil* e : vP) e->integrate(t);
+	//for (Proyectil* e : vP) e->integrate(t);
 }
 
 // Function to clean data
