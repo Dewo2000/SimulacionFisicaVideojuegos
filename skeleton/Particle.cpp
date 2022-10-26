@@ -2,7 +2,7 @@
 using namespace physx;
 Particle::Particle(Vector3 Pos, Vector3 Vel,Vector3 Acc,float Size ,float Opacity ,Vector3 ColorRGB, double aliveTime)
 	:vel(Vel),acc(Acc),size(Size),opacity(Opacity), color({ ColorRGB, opacity }),remainning_time(aliveTime){
-	
+	pos = Pos;
 	pose = PxTransform(Pos);
 	renderItem = new RenderItem(CreateShape(PxSphereGeometry(size)), &pose,color);
 }
@@ -19,4 +19,14 @@ void Particle::integrate(double t)
 
 
 	remainning_time--;
+}
+bool Particle::isAlive()
+{
+	return remainning_time>0;
+}
+
+Particle* Particle::clone() const
+{
+	Particle* p = new Particle(pos, vel, acc, size, opacity, color.getXYZ(), remainning_time);
+	return p;
 }

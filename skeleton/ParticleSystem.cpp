@@ -30,7 +30,8 @@ ParticleGenerator* ParticleSystem::getParticleGenerator(string name)
 
 void ParticleSystem::generateFireworkSystem()
 {
+	Particle* p = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 1, 1, { 0,1,0 }, 100);
 	GaussianParticleGenerator* fPG = new GaussianParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 10,10,10 }, { 10,10,10 });
+	fPG->setParticle(p);
 	_particle_generators.push_back(fPG);
-
 }

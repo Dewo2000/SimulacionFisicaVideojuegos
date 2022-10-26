@@ -27,9 +27,9 @@ vector<Particle*> GaussianParticleGenerator::generateParticles()
             auto vz = std::normal_distribution<float>(_mean_vel.z - std_dev_vel.z / 2, _mean_vel.z + std_dev_vel.z / 2);
 
             Vector3 pos = Vector3(px(random_generator), py(random_generator), pz(random_generator));
-            Vector3 vel = Vector3(px(random_generator), py(random_generator), pz(random_generator));
+            Vector3 vel = Vector3(vx(random_generator), vy(random_generator), vz(random_generator));
 
-            vP.push_back(new Particle(pos, vel, { 0,-10,0 }, 1, 1, { 0,1,0 },100));
+            vP.push_back(_model->clone());
         }
     }
     return vP;
