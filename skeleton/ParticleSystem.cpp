@@ -32,21 +32,21 @@ ParticleGenerator* ParticleSystem::getParticleGenerator(string name)
 
 void ParticleSystem::generateFireworkSystem()
 {
-	Particle* p = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.2, 1, { 0.3,0.3,1 }, 1000, false);
-	Particle* p2 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.2, 1, { 1,1,1 }, 1000, false);
-	Particle* p3 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.2, 1, { 0,0,1 }, 1000, false);
-	shared_ptr<ParticleGenerator> gen1(new CircleParticleGenerator({ 0,0,0 }, { 0,10,0 }, { 1,1,1 }, { 10,10,1 }, 0.3, 30,30));
-	shared_ptr<ParticleGenerator> gen2(new UniformParticleGenerator({ 0,0,0 }, { 0,10,0 }, { 10,10,1 }, { 10,10,1 }, 0.7, 2));
+	Particle* p = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.2, 1, { 0.3,0.3,1 }, 10, false);
+	Particle* p2 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.2, 1, { 1,1,1 }, 10, false);
+	Particle* p3 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.2, 1, { 0,0,1 }, 10, false);
+	shared_ptr<ParticleGenerator> gen1(new CircleParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 1,1,1 }, { 10,10,1 }, 0.3, 30,30));
+	shared_ptr<ParticleGenerator> gen2(new UniformParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 10,10,1 }, { 10,10,1 }, 0.7, 2));
 	shared_ptr<ParticleGenerator> gen3(new GaussianParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 10,10,1 }, { 10,10,1 }, 1, 10));
 	shared_ptr<ParticleGenerator> gen4(new GaussianParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 10,10,1 }, { 10,10,1 }, 1, 10));
-	shared_ptr<ParticleGenerator> gen5(new CircleParticleGenerator({ 0,0,0 }, { 0,10,0 }, { 1,1,1 }, { 10,10,1 }, 0.3, 30, 30));
-	shared_ptr<ParticleGenerator> gen6(new CircleParticleGenerator({ 0,0,0 }, { 0,10,0 }, { 1,1,1 }, { 10,10,1 }, 0.3, 30, 30));
+	shared_ptr<ParticleGenerator> gen5(new CircleParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 1,1,1 }, { 10,10,1 }, 0.3, 30, 30));
+	shared_ptr<ParticleGenerator> gen6(new CircleParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 1,1,1 }, { 10,10,1 }, 0.3, 30, 30));
 
 
-	_fireworkpool.push_back(new FireWork({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.2, 1, { 0,0,1 }, 100, { gen1,gen5,gen6 }, false));
-	_fireworkpool.push_back(new FireWork({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.3, 1, { 0.8,0.8,1 }, 100, { gen2 }, false));
-	_fireworkpool.push_back(new FireWork({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.3, 1, { 0.5,0.5,1 }, 100, { gen3 }, false));
-	_particles.push_back(new FireWork({ 0,-50,0 }, { 0,40,0 }, { 0,-10,0 }, 0.5, 1, { 1,1,1 }, 150, { gen4,gen3,gen1,gen5,gen6 }));
+	_fireworkpool.push_back(new FireWork({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.2, 1, { 0,0,1 }, 1.5, { gen1,gen5,gen6 }, false));
+	_fireworkpool.push_back(new FireWork({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.3, 1, { 0.8,0.8,1 }, 1.5, { gen2,gen6 }, false));
+	_fireworkpool.push_back(new FireWork({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.3, 1, { 0.5,0.5,1 }, 1.5, { gen3,gen5 }, false));
+	_particles.push_back(new FireWork({ 0,-50,0 }, { 0,40,0 }, { 0,-10,0 }, 0.5, 1, { 1,1,1 }, 2, { gen4,gen3,gen1,gen5,gen6 }));
 
 	gen1.get()->setParticle(p);
 	gen2.get()->setParticle(_fireworkpool[0]);

@@ -1,13 +1,18 @@
 #include "Particle.h"
+
 using namespace physx;
 Particle::Particle(Vector3 Pos, Vector3 Vel,Vector3 Acc,float Size ,float Opacity ,Vector3 ColorRGB, double aliveTime,bool render)
 	:vel(Vel),acc(Acc),size(Size),opacity(Opacity), color({ ColorRGB, opacity }),remainning_time(aliveTime){
+	y2k.tm_sec = 0;
+	time(&timer);
+
+
 	pos = Pos;
 	pose = PxTransform(Pos);
-	if(render)
-	renderItem = new RenderItem(CreateShape(PxSphereGeometry(size)), &pose,color);
+	if (render)
+		renderItem = new RenderItem(CreateShape(PxSphereGeometry(size)), &pose, color);
 	else
-	renderItem = nullptr;
+		renderItem = nullptr;
 }
 
 Particle::~Particle()
@@ -20,9 +25,10 @@ void Particle::integrate(double t)
 {
 	pose.p += vel * t;
 	vel = vel * pow(damping, t) + acc * t;
-
-
-	remainning_time--;
+	
+	double x = difftime(timer, mktime(&y2k));
+	remainning_time -= t;;
+	
 }
 bool Particle::isAlive()
 {

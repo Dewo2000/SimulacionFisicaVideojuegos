@@ -2,6 +2,7 @@
 #include "core.hpp"
 #include "RenderUtils.hpp"
 #include <iostream>
+#include <time.h>
 enum ParticleType {
 	NONE,FIREWORK
 };
@@ -32,6 +33,9 @@ protected:
 	//ParticleType _type;
 	//PxGeometryType typeGeometry;
 	//std::make_unique<RenderItem> renderItem;
+	struct tm y2k = { 0 };
+	time_t timer;
+
 };
 
 
