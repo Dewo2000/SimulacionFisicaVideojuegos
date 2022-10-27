@@ -1,14 +1,14 @@
 #include "GaussianParticleGenerator.h"
 
-GaussianParticleGenerator::GaussianParticleGenerator(Vector3 pos, Vector3 vel,Vector3 std_dev_pos, Vector3 std_dev_vel)
+GaussianParticleGenerator::GaussianParticleGenerator(Vector3 pos, Vector3 vel,Vector3 std_dev_pos, Vector3 std_dev_vel,  double genPro, int numP)
 {
     _name = "Gaussian";
     _mean_pos = pos;
     _mean_vel = vel;
-    generation_probability = 1;
+    generation_probability = genPro;
     this->std_dev_pos = std_dev_pos;
     this->std_dev_vel = std_dev_vel;
-    _num_particles = 10;
+    _num_particles = numP;
 	std:random_device r;
 	random_generator = std::mt19937(r());
 }

@@ -1,13 +1,13 @@
 #include "UniformParticleGenerator.h"
 
 
-UniformParticleGenerator::UniformParticleGenerator(Vector3 pos, Vector3 vel, Vector3 posWidth, Vector3 velWidth)
+UniformParticleGenerator::UniformParticleGenerator(Vector3 pos, Vector3 vel, Vector3 posWidth, Vector3 velWidth, double genPro, int numP)
 {
     _name = "Uniforme";
     _mean_pos = pos;
     _mean_vel = vel;
-    generation_probability = 1;
-    _num_particles = 10;
+    generation_probability = genPro;
+    _num_particles = numP;
     _pos_width = posWidth;
     _vel_width = velWidth;
     std:random_device r;
