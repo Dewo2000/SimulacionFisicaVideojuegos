@@ -35,11 +35,11 @@ void ParticleSystem::generateFireworkSystem()
 void ParticleSystem::testGenerators()
 {
 	Particle* p = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 1, 1, { 0,1,0 }, 1000,false);
-	GaussianParticleGenerator* gG = new GaussianParticleGenerator({ 20,0,0 }, { 0,0,0 }, { 10,10,10 }, { 10,10,10 });
+	GaussianParticleGenerator* gG = new GaussianParticleGenerator({ 20,0,0 }, { 0,0,0 }, { 10,10,10 }, { 10,10,10 },1,10);
 	gG->setParticle(p);
 	_particle_generators.push_back(gG);
 	Particle* up = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 1, 1, { 0,0,1 }, 1000,false);
-	UniformParticleGenerator* uG = new UniformParticleGenerator({ -20,0,0 }, { 0,0,0 }, { 10,10,10 }, { 10,10,10 });
+	UniformParticleGenerator* uG = new UniformParticleGenerator({ -20,0,0 }, { 0,0,0 }, { 10,10,10 }, { 10,10,10 },1,10);
 	uG->setParticle(up);
 	_particle_generators.push_back(uG);
 }
