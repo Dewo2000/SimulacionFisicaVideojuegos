@@ -255,6 +255,7 @@
   <ItemGroup>
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="Esfera.cpp" />
+    <ClCompile Include="FireWork.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GaussianParticleGenerator.cpp" />
     <ClCompile Include="main.cpp" />
@@ -271,6 +272,7 @@
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="Esfera.h" />
+    <ClInclude Include="FireWork.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GaussianParticleGenerator.h" />
     <ClInclude Include="Particle.h" />
