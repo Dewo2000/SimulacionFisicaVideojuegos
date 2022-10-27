@@ -29,8 +29,10 @@ vector<Particle*> UniformParticleGenerator::generateParticles()
 
             Vector3 pos = Vector3(px(random_generator), py(random_generator), pz(random_generator));
             Vector3 vel = Vector3(vx(random_generator), vy(random_generator), vz(random_generator));
-
-            vP.push_back(_model->clone());
+            Particle* p = _model->clone();
+            p->setVel(vel);
+            p->setPos(_mean_pos);
+            vP.push_back(p);
         }
     }
     return vP;
