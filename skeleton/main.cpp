@@ -64,7 +64,8 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	pSym = new ParticleSystem();
-	pSym->testGenerators();
+	//pSym->testGenerators();
+	pSym->shootFirework(1);
 	//f = new Floor(Vector3(0, -10, 0));
 	//e = new Esfera(Vector3(0, 20, -100));
 }

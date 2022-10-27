@@ -6,6 +6,14 @@ ParticleSystem::ParticleSystem()
 
 void ParticleSystem::update(double t)
 {
+	for (int i = 0; i < _particles.size(); i++) {
+		_particles[i]->integrate(t);
+		if (!_particles[i]->isAlive()) {
+			onParticleDead(_particles[i]);
+			delete _particles[i];
+			_particles.erase(_particles.begin() + i);
+		}
+	}
 	for (ParticleGenerator* g:_particle_generators)
 	{
 		vector<Particle*> aux=  g->generateParticles();
@@ -14,13 +22,7 @@ void ParticleSystem::update(double t)
 			_particles.push_back(p);
 		}
 	}
-	for (int i = 0; i < _particles.size(); i++) {
-		_particles[i]->integrate(t);
-		if (!_particles[i]->isAlive()) {
-			delete _particles[i];
-			_particles.erase(_particles.begin() + i);
-		}
-	}
+	
 }
 
 ParticleGenerator* ParticleSystem::getParticleGenerator(string name)
@@ -30,16 +32,60 @@ ParticleGenerator* ParticleSystem::getParticleGenerator(string name)
 
 void ParticleSystem::generateFireworkSystem()
 {
+	Particle* p = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.2, 1, { 0.3,0.3,1 }, 1000, false);
+	Particle* p2 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.2, 1, { 1,1,1 }, 1000, false);
+	Particle* p3 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.2, 1, { 0,0,1 }, 1000, false);
+	shared_ptr<ParticleGenerator> gen1(new CircleParticleGenerator({ 0,0,0 }, { 0,10,0 }, { 1,1,1 }, { 10,10,1 }, 0.3, 30,30));
+	shared_ptr<ParticleGenerator> gen2(new UniformParticleGenerator({ 0,0,0 }, { 0,10,0 }, { 10,10,1 }, { 10,10,1 }, 0.7, 2));
+	shared_ptr<ParticleGenerator> gen3(new GaussianParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 10,10,1 }, { 10,10,1 }, 1, 10));
+	shared_ptr<ParticleGenerator> gen4(new GaussianParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 10,10,1 }, { 10,10,1 }, 1, 10));
+	shared_ptr<ParticleGenerator> gen5(new CircleParticleGenerator({ 0,0,0 }, { 0,10,0 }, { 1,1,1 }, { 10,10,1 }, 0.3, 30, 30));
+	shared_ptr<ParticleGenerator> gen6(new CircleParticleGenerator({ 0,0,0 }, { 0,10,0 }, { 1,1,1 }, { 10,10,1 }, 0.3, 30, 30));
+	gen5.get()->setParticle(p2);
+	gen6.get()->setParticle(p3);
+
+	gen1.get()->setParticle(p);
+	_fireworkpool.push_back(new FireWork({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.2, 1, { 0,0,1 }, 100, { gen1,gen5,gen6 },false));
+
+	
+	gen2.get()->setParticle(_fireworkpool[0]);
+	_fireworkpool.push_back(new FireWork({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.3, 1, { 0.8,0.8,1 }, 100, { gen2,gen1,gen5,gen6 }, false));
+
+	
+	gen3.get()->setParticle(_fireworkpool[1]);
+	_fireworkpool.push_back(new FireWork({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.3, 1, { 0.5,0.5,1 }, 100, { gen3,gen2,gen1,gen5 ,gen6 }, false));
+
+
+	gen4.get()->setParticle(_fireworkpool[2]);
+	_particles.push_back(new FireWork({ 0,-50,0 }, { 0,40,0 }, { 0,-10,0 }, 0.5, 1, { 1,1,1 }, 150, { gen4,gen3,gen2,gen1,gen5,gen6 }));
 
 }
 void ParticleSystem::testGenerators()
 {
-	Particle* p = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 1, 1, { 0,1,0 }, 1000,false);
-	GaussianParticleGenerator* gG = new GaussianParticleGenerator({ 20,0,0 }, { 0,0,0 }, { 10,10,10 }, { 10,10,10 },1,10);
+	Particle* p = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.1, 1, { 0,1,0 }, 1000,false);
+	GaussianParticleGenerator* gG = new GaussianParticleGenerator({ 20,-20,0 }, { 0,0,0 }, { 10,10,10 }, { 10,10,10 },1,10);
 	gG->setParticle(p);
 	_particle_generators.push_back(gG);
-	Particle* up = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 1, 1, { 0,0,1 }, 1000,false);
-	UniformParticleGenerator* uG = new UniformParticleGenerator({ -20,0,0 }, { 0,0,0 }, { 10,10,10 }, { 10,10,10 },1,10);
+	Particle* up = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.1, 1, { 0,0,1 }, 1000,false);
+	UniformParticleGenerator* uG = new UniformParticleGenerator({ -20,-20,0 }, { 0,0,0 }, { 10,10,10 }, { 10,10,10 },1,10);
 	uG->setParticle(up);
 	_particle_generators.push_back(uG);
+	Particle* cp = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.1, 1, { 1,0,0 }, 1000, false);
+	CircleParticleGenerator* cG = new CircleParticleGenerator({ 0,20,0 }, { 0,0,0 }, { 10,10,10 }, { 10,10,10 }, 1, 10,10);
+	cG->setParticle(cp);
+	_particle_generators.push_back(cG);
+}
+
+void ParticleSystem::shootFirework(int type)
+{
+	generateFireworkSystem();
+}
+
+void ParticleSystem::onParticleDead(Particle* p)
+{
+	if (p->isFirework()) {
+		FireWork* f = (FireWork*)p;
+		auto newparticles = f->explode();
+		for (auto par : newparticles)_particles.push_back(par);
+	}
 }

@@ -19,12 +19,12 @@ vector<Particle*> GaussianParticleGenerator::generateParticles()
     for (int i = 0; i < _num_particles; i++) {
         auto rp = std::normal_distribution<double>(0, 1);
         if (rp(random_generator) < generation_probability) {
-            auto px = std::normal_distribution<float>( _mean_pos.x + std_dev_pos.x / 2,abs(_mean_pos.x - std_dev_pos.x / 2) );
+            auto px = std::normal_distribution<float>( _mean_pos.x + std_dev_pos.x / 2, abs(_mean_pos.x - std_dev_pos.x / 2) );
             auto py = std::normal_distribution<float>(_mean_pos.y + std_dev_pos.y / 2, abs(_mean_pos.y - std_dev_pos.y / 2));
             auto pz = std::normal_distribution<float>(_mean_pos.z + std_dev_pos.z / 2,abs(_mean_pos.z - std_dev_pos.z / 2));
             auto vx = std::normal_distribution<float>( _mean_vel.x + std_dev_vel.x / 2, abs(_mean_vel.x - std_dev_vel.x / 2));
             auto vy = std::normal_distribution<float>( _mean_vel.y + std_dev_vel.y / 2,abs(_mean_vel.y - std_dev_vel.y / 2));
-            auto vz = std::normal_distribution<float>( _mean_vel.z + std_dev_vel.z / 2,abs(_mean_vel.z - std_dev_vel.z / 2));
+            auto vz = std::normal_distribution<float>( _mean_vel.z + std_dev_vel.z / 2, abs(_mean_vel.z - std_dev_vel.z / 2));
 
             Vector3 pos = Vector3(px(random_generator), py(random_generator), pz(random_generator));
             Vector3 vel = Vector3(vx(random_generator), vy(random_generator), vz(random_generator));
