@@ -5,7 +5,7 @@ using namespace std;
 class FireWork : public Particle
 {
 public:
-	FireWork(Vector3 Pos, Vector3 Vel, Vector3 Acc, float Size, float Opacity, Vector3 ColorRGB, double aliveTime, vector<shared_ptr< ParticleGenerator>> gens,bool rende = true);
+	FireWork(Vector3 Pos, Vector3 Vel, Vector3 Acc, float Size, float Opacity, Vector3 ColorRGB, double aliveTime, vector<shared_ptr< ParticleGenerator>> gens, float mass,bool rende = true);
 	virtual bool isFirework() override { return true; };
 	vector<Particle*> explode();
 	virtual Particle* clone() const;

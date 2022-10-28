@@ -258,9 +258,11 @@
     <ClCompile Include="Esfera.cpp" />
     <ClCompile Include="FireWork.cpp" />
     <ClCompile Include="Floor.cpp" />
+    <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="GaussianParticleGenerator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleForceRegistry.cpp" />
     <ClCompile Include="ParticleGenerator.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Proyectil.cpp" />
@@ -276,8 +278,11 @@
     <ClInclude Include="Esfera.h" />
     <ClInclude Include="FireWork.h" />
     <ClInclude Include="Floor.h" />
+    <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="GaussianParticleGenerator.h" />
+    <ClInclude Include="GravityForceGenerator.h" />
     <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleForceRegistry.h" />
     <ClInclude Include="ParticleGenerator.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Proyectil.h" />

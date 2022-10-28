@@ -2,11 +2,15 @@
 
 ParticleSystem::ParticleSystem()
 {
+	freg = new ParticleForceRegistry();
 }
 
 void ParticleSystem::update(double t)
 {
+
 	for (int i = 0; i < _particles.size(); i++) {
+		freg->updateForces(t);
+
 		_particles[i]->integrate(t);
 		if (!_particles[i]->isAlive()) {
 			onParticleDead(_particles[i]);
@@ -32,21 +36,21 @@ ParticleGenerator* ParticleSystem::getParticleGenerator(string name)
 
 void ParticleSystem::generateFireworkSystem()
 {
-	Particle* p = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.2, 1, { 0.3,0.3,1 }, 10, false);
-	Particle* p2 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.2, 1, { 1,1,1 }, 10, false);
-	Particle* p3 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.2, 1, { 0,0,1 }, 10, false);
+	Particle* p = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.1, 1, { 0.3,0.3,1 }, 10,1, false);
+	Particle* p2 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.1, 1, { 1,1,1 }, 10,1, false);
+	Particle* p3 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.1, 1, { 0,0,1 }, 10,1, false);
 	shared_ptr<ParticleGenerator> gen1(new CircleParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 1,1,1 }, { 10,10,1 }, 0.3, 30,30));
 	shared_ptr<ParticleGenerator> gen2(new UniformParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 10,10,1 }, { 10,10,1 }, 0.7, 2));
-	shared_ptr<ParticleGenerator> gen3(new GaussianParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 10,10,1 }, { 10,10,1 }, 1, 10));
-	shared_ptr<ParticleGenerator> gen4(new GaussianParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 10,10,1 }, { 10,10,1 }, 1, 10));
+	shared_ptr<ParticleGenerator> gen3(new GaussianParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 10,10,1 }, { 10,10,1 }, 1, 4));
+	shared_ptr<ParticleGenerator> gen4(new GaussianParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 10,10,1 }, { 10,10,1 }, 1, 6));
 	shared_ptr<ParticleGenerator> gen5(new CircleParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 1,1,1 }, { 10,10,1 }, 0.3, 30, 30));
 	shared_ptr<ParticleGenerator> gen6(new CircleParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 1,1,1 }, { 10,10,1 }, 0.3, 30, 30));
 
 
-	_fireworkpool.push_back(new FireWork({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.2, 1, { 0,0,1 }, 1.5, { gen1,gen5,gen6 }, false));
-	_fireworkpool.push_back(new FireWork({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.3, 1, { 0.8,0.8,1 }, 1.5, { gen2,gen6 }, false));
-	_fireworkpool.push_back(new FireWork({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.3, 1, { 0.5,0.5,1 }, 1.5, { gen3,gen5 }, false));
-	_particles.push_back(new FireWork({ 0,-50,0 }, { 0,40,0 }, { 0,-10,0 }, 0.5, 1, { 1,1,1 }, 2, { gen4,gen3,gen1,gen5,gen6 }));
+	_fireworkpool.push_back(new FireWork({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.2, 1, { 0,0,1 }, 1.5, { gen1,gen5,gen6 },1, false));
+	_fireworkpool.push_back(new FireWork({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.3, 1, { 0.8,0.8,1 }, 1.5, { gen2,gen6 },1, false));
+	_fireworkpool.push_back(new FireWork({ 0,0,0 }, { 0,0,0 }, { 0,-10,0 }, 0.4, 1, { 0.5,0.5,1 }, 1.5, { gen3,gen5 },1, false));
+	_particles.push_back(new FireWork({ 0,-50,0 }, { 0,40,0 }, { 0,-10,0 }, 0.5, 1, { 1,1,1 }, 2, { gen4,gen3,gen6 },1));
 
 	gen1.get()->setParticle(p);
 	gen2.get()->setParticle(_fireworkpool[0]);
@@ -86,4 +90,14 @@ void ParticleSystem::onParticleDead(Particle* p)
 		auto newparticles = f->explode();
 		for (auto par : newparticles)_particles.push_back(par);
 	}
+}
+
+void ParticleSystem::testForceGenerators() {
+	GravityForceGenerator* gfg = new GravityForceGenerator({ 0,-10,0 });
+
+	Particle* p = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,1 }, 1000 , 0.0001);
+	_particles.push_back(p);
+
+	freg->addRegistry(gfg, p);
+
 }
