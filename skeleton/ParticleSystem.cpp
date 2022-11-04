@@ -94,10 +94,19 @@ void ParticleSystem::onParticleDead(Particle* p)
 
 void ParticleSystem::testForceGenerators() {
 	GravityForceGenerator* gfg = new GravityForceGenerator({ 0,-10,0 });
+	GravityForceGenerator* gfg2 = new GravityForceGenerator({ 0,-8,0 });
 
 	Particle* p = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,1 }, 1000 , 0.0001);
 	_particles.push_back(p);
+	Particle* p2 = new Particle({ 10,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,0 }, 1000, 0.0001);
+	_particles.push_back(p2);
+	Particle* p3 = new Particle({ -10,0,0 }, { 0,0,0 }, { 0,-10,0 }, 1, 1, { 1,1,0 }, 1000, 0.0001);
+	_particles.push_back(p3);
+	Particle* p4 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 0,1,1 }, 1000, 0.001);
+	_particles.push_back(p4);
 
 	freg->addRegistry(gfg, p);
+	freg->addRegistry(gfg, p4);
+	freg->addRegistry(gfg2, p2);
 
 }
