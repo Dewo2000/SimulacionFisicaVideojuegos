@@ -2,14 +2,14 @@
 
 ParticleSystem::ParticleSystem()
 {
-	freg = new ParticleForceRegistry();
+	forceRegistry = new ParticleForceRegistry();
 }
 
 void ParticleSystem::update(double t)
 {
 
 	for (int i = 0; i < _particles.size(); i++) {
-		freg->updateForces(t);
+		forceRegistry->updateForces(t);
 
 		_particles[i]->integrate(t);
 		if (!_particles[i]->isAlive()) {
@@ -94,19 +94,35 @@ void ParticleSystem::onParticleDead(Particle* p)
 
 void ParticleSystem::testForceGenerators() {
 	GravityForceGenerator* gfg = new GravityForceGenerator({ 0,-10,0 });
-	GravityForceGenerator* gfg2 = new GravityForceGenerator({ 0,-8,0 });
+	//GravityForceGenerator* gfg2 = new GravityForceGenerator({ 0,-8,0 });
 
-	Particle* p = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,1 }, 1000 , 0.0001);
+	//Particle* p = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,1 }, 1000 , 0.0001);
+	//_particles.push_back(p);
+	//Particle* p2 = new Particle({ 10,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,0 }, 1000, 0.0001);
+	//_particles.push_back(p2);
+	//Particle* p3 = new Particle({ -10,0,0 }, { 0,0,0 }, { 0,-10,0 }, 1, 1, { 1,1,0 }, 1000, 0.0001);
+	//_particles.push_back(p3);
+	//Particle* p4 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 0,1,1 }, 1000, 0.001);
+	//_particles.push_back(p4);
+
+	//freg->addRegistry(gfg, p);
+	//freg->addRegistry(gfg, p4);
+	//freg->addRegistry(gfg2, p2);
+
+	DragGenerator* dg = new DragGenerator({10,0,0},0.1,0.05);
+
+	Particle* p = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,1 }, 1000, 0.1);
 	_particles.push_back(p);
-	Particle* p2 = new Particle({ 10,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,0 }, 1000, 0.0001);
+	forceRegistry->addRegistry(dg, p);
+	forceRegistry->addRegistry(gfg, p);
+
+	Particle* p1 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,1 }, 1000, 0.05);
+	_particles.push_back(p1);
+	forceRegistry->addRegistry(dg, p1);
+	forceRegistry->addRegistry(gfg, p1);
+
+	Particle* p2 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,1 }, 1000, 1);
 	_particles.push_back(p2);
-	Particle* p3 = new Particle({ -10,0,0 }, { 0,0,0 }, { 0,-10,0 }, 1, 1, { 1,1,0 }, 1000, 0.0001);
-	_particles.push_back(p3);
-	Particle* p4 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 0,1,1 }, 1000, 0.001);
-	_particles.push_back(p4);
-
-	freg->addRegistry(gfg, p);
-	freg->addRegistry(gfg, p4);
-	freg->addRegistry(gfg2, p2);
-
+	forceRegistry->addRegistry(dg, p2);
+	forceRegistry->addRegistry(gfg, p2);
 }

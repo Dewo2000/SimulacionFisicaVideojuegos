@@ -7,6 +7,7 @@
 #include"CircleParticleGenerator.h"
 #include "GravityForceGenerator.h"
 #include "ParticleForceRegistry.h"
+#include "DragGenerator.h"
 using namespace std;
 
 class ParticleSystem
@@ -26,6 +27,6 @@ protected:
 	vector<ParticleGenerator*>_particle_generators;
 	vector<ForceGenerator*>force_generator;
 	Vector3 _gravity = {0,-10,0};
-	ParticleForceRegistry* freg;
+	ParticleForceRegistry* forceRegistry;
 };
 
