@@ -7,9 +7,8 @@ ParticleSystem::ParticleSystem()
 
 void ParticleSystem::update(double t)
 {
-
+	forceRegistry->updateForces(t);
 	for (int i = 0; i < _particles.size(); i++) {
-		forceRegistry->updateForces(t);
 
 		_particles[i]->integrate(t);
 		if (!_particles[i]->isAlive()) {
@@ -111,12 +110,21 @@ void ParticleSystem::testForceGenerators() {
 
 	DragGenerator* dg = new DragGenerator({10,0,0},0.1,0.05);
 
-	Particle* p = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,1 }, 1000, 0.1);
-	_particles.push_back(p);
-	forceRegistry->addRegistry(dg, p);
-	forceRegistry->addRegistry(gfg, p);
+	TwisterWindGenerator* twg = new TwisterWindGenerator({ 0,0,0 }, { 0, 0, 0 },1, 0.1, 0.05);
 
-	Particle* p1 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,1 }, 1000, 0.05);
+	
+	for (int i = 0; i < 10; i++) {
+		float x = rand() % 10;
+		float y = rand() % 10;
+		float z = rand() % 10;
+
+		Particle* p = new Particle({x,y,z }, { 0,0,0 }, { 0,0,0 },1, 1, { 1,1,1 }, 1000, 0.5);
+		_particles.push_back(p);
+		forceRegistry->addRegistry(twg, p);
+		forceRegistry->addRegistry(gfg, p);
+	}
+
+	/*Particle* p1 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,1 }, 1000, 0.05);
 	_particles.push_back(p1);
 	forceRegistry->addRegistry(dg, p1);
 	forceRegistry->addRegistry(gfg, p1);
@@ -124,5 +132,5 @@ void ParticleSystem::testForceGenerators() {
 	Particle* p2 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,1 }, 1000, 1);
 	_particles.push_back(p2);
 	forceRegistry->addRegistry(dg, p2);
-	forceRegistry->addRegistry(gfg, p2);
+	forceRegistry->addRegistry(gfg, p2);*/
 }

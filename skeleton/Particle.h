@@ -15,6 +15,7 @@ public:
 	void setVel(Vector3 vel);
 	Vector3 getVel() { return vel; };
 	void setPos(Vector3 pos);
+	Vector3 getPos() { return pose.p; };
 	virtual bool isFirework() { return false; };
 	float getImass() { return inverss_mass; };
 	float getmass() { return mass; };

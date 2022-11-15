@@ -8,6 +8,7 @@
 #include "GravityForceGenerator.h"
 #include "ParticleForceRegistry.h"
 #include "DragGenerator.h"
+#include "TwisterWindGenerator.h"
 using namespace std;
 
 class ParticleSystem

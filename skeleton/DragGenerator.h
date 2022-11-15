@@ -3,6 +3,7 @@
 class DragGenerator :public ForceGenerator
 {
 public:
+	DragGenerator() {};
 	DragGenerator(Vector3 fv) : windforce(fv), _k1(0), _k2(0) {};
 	DragGenerator(Vector3 fv,const float k1,const float k2):windforce(fv), _k1(k1), _k2(k1) {};
 	virtual void updateForce(Particle* p, double t) {
