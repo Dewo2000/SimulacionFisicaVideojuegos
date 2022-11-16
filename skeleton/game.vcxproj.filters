@@ -23,6 +23,7 @@
     <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="ParticleForceRegistry.cpp" />
     <ClCompile Include="TwisterWindGenerator.cpp" />
+    <ClCompile Include="BlastGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -49,6 +50,7 @@
     <ClInclude Include="GravityForceGenerator.h" />
     <ClInclude Include="DragGenerator.h" />
     <ClInclude Include="TwisterWindGenerator.h" />
+    <ClInclude Include="BlastGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

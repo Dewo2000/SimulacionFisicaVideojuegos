@@ -9,6 +9,7 @@
 #include "ParticleForceRegistry.h"
 #include "DragGenerator.h"
 #include "TwisterWindGenerator.h"
+#include "BlastGenerator.h"
 using namespace std;
 
 class ParticleSystem
@@ -27,7 +28,9 @@ protected:
 	vector<FireWork*>_fireworkpool;
 	vector<ParticleGenerator*>_particle_generators;
 	vector<ForceGenerator*>force_generator;
+	std::mt19937 random_generator;
 	Vector3 _gravity = {0,-10,0};
 	ParticleForceRegistry* forceRegistry;
+	BlastGenerator* bg;
 };
 

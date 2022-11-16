@@ -3,6 +3,8 @@
 ParticleSystem::ParticleSystem()
 {
 	forceRegistry = new ParticleForceRegistry();
+	std:random_device r;
+	random_generator = std::mt19937(r());
 }
 
 void ParticleSystem::update(double t)
@@ -108,20 +110,19 @@ void ParticleSystem::testForceGenerators() {
 	//freg->addRegistry(gfg, p4);
 	//freg->addRegistry(gfg2, p2);
 
-	DragGenerator* dg = new DragGenerator({10,0,0},0.1,0.05);
+	//DragGenerator* dg = new DragGenerator({10,0,0},0.1,0.05);
 
-	TwisterWindGenerator* twg = new TwisterWindGenerator({ 0,0,0 }, { 0, 0, 0 },1, 0.1, 0.05);
-
-	
+	//TwisterWindGenerator* twg = new TwisterWindGenerator({ 0,0,0 }, { 0, 0, 0 },1, 0.1, 0.05);
+	BlastGenerator* bg = new BlastGenerator({ 0,0,0 }, 10000, 20);
+	auto size = std::uniform_real_distribution<double>(0, 10);
 	for (int i = 0; i < 20; i++) {
-		float x = rand() % 10 - 5;
-		float y = rand() % 10 - 5;
-		float z = rand() % 10 - 5;
+		float x = size(random_generator) - 5;
+		float y = size(random_generator) - 5;
+		float z = size(random_generator) - 5;
 
-		Particle* p = new Particle({x+z,y+x,z+y}, { 0,0,0 }, { 0,0,0 },1, 1, { 1,1,1 }, 1000, 0.5);
+		Particle* p = new Particle({x,y,z}, { 0,0,0 }, { 0,0,0 },1, 1, { 1,1,1 }, 1000,size(random_generator));
 		_particles.push_back(p);
-		forceRegistry->addRegistry(twg, p);
-		forceRegistry->addRegistry(gfg, p);
+		forceRegistry->addRegistry(bg, p);
 	}
 
 	/*Particle* p1 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,1 }, 1000, 0.05);
