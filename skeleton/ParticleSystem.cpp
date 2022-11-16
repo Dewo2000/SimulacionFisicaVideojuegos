@@ -113,12 +113,12 @@ void ParticleSystem::testForceGenerators() {
 	TwisterWindGenerator* twg = new TwisterWindGenerator({ 0,0,0 }, { 0, 0, 0 },1, 0.1, 0.05);
 
 	
-	for (int i = 0; i < 10; i++) {
-		float x = rand() % 10;
-		float y = rand() % 10;
-		float z = rand() % 10;
+	for (int i = 0; i < 20; i++) {
+		float x = rand() % 10 - 5;
+		float y = rand() % 10 - 5;
+		float z = rand() % 10 - 5;
 
-		Particle* p = new Particle({x,y,z }, { 0,0,0 }, { 0,0,0 },1, 1, { 1,1,1 }, 1000, 0.5);
+		Particle* p = new Particle({x+z,y+x,z+y}, { 0,0,0 }, { 0,0,0 },1, 1, { 1,1,1 }, 1000, 0.5);
 		_particles.push_back(p);
 		forceRegistry->addRegistry(twg, p);
 		forceRegistry->addRegistry(gfg, p);
