@@ -3,14 +3,16 @@
 ParticleSystem::ParticleSystem()
 {
 	forceRegistry = new ParticleForceRegistry();
+	std:random_device r;
+	random_generator = std::mt19937(r());
+	gfg = new GravityForceGenerator({ 0,-10,0 });
+	dragg = new DragGenerator({ 20,0,0 }, 0.1, 0.05);
 }
 
 void ParticleSystem::update(double t)
 {
-
+	forceRegistry->updateForces(t);
 	for (int i = 0; i < _particles.size(); i++) {
-		forceRegistry->updateForces(t);
-
 		_particles[i]->integrate(t);
 		if (!_particles[i]->isAlive()) {
 			onParticleDead(_particles[i]);
@@ -24,6 +26,8 @@ void ParticleSystem::update(double t)
 		for (Particle* p : aux)
 		{
 			_particles.push_back(p);
+			forceRegistry->addRegistry(gfg, p);
+			forceRegistry->addRegistry(dragg, p);
 		}
 	}
 	
@@ -90,10 +94,11 @@ void ParticleSystem::onParticleDead(Particle* p)
 		auto newparticles = f->explode();
 		for (auto par : newparticles)_particles.push_back(par);
 	}
+	forceRegistry->deleteParticleRegistry(p);
 }
 
 void ParticleSystem::testForceGenerators() {
-	GravityForceGenerator* gfg = new GravityForceGenerator({ 0,-10,0 });
+	//GravityForceGenerator* gfg = new GravityForceGenerator({ 0,-10,0 });
 	//GravityForceGenerator* gfg2 = new GravityForceGenerator({ 0,-8,0 });
 
 	//Particle* p = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,1 }, 1000 , 0.0001);
@@ -108,8 +113,13 @@ void ParticleSystem::testForceGenerators() {
 	//freg->addRegistry(gfg, p);
 	//freg->addRegistry(gfg, p4);
 	//freg->addRegistry(gfg2, p2);
+	Particle* p = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 0.8, 1, { 0,1,0 }, 1000,1,false);
+	GaussianParticleGenerator* gG = new GaussianParticleGenerator({ 0,0,0 }, { -2,0,0 }, { 10,10,10 }, { 2,20,1 }, 0.01, 1);
+	gG->setParticle(p);
+	_particle_generators.push_back(gG);
+	
 
-	DragGenerator* dg = new DragGenerator({10,0,0},0.1,0.05);
+	/*DragGenerator* dg = new DragGenerator({10,0,0},0.1,0.05);
 
 	Particle* p = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,1 }, 1000, 0.1);
 	_particles.push_back(p);
@@ -124,5 +134,5 @@ void ParticleSystem::testForceGenerators() {
 	Particle* p2 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,1 }, 1000, 1);
 	_particles.push_back(p2);
 	forceRegistry->addRegistry(dg, p2);
-	forceRegistry->addRegistry(gfg, p2);
+	forceRegistry->addRegistry(gfg, p2);*/
 }

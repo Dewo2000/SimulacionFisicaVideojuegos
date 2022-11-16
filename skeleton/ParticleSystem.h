@@ -28,5 +28,8 @@ protected:
 	vector<ForceGenerator*>force_generator;
 	Vector3 _gravity = {0,-10,0};
 	ParticleForceRegistry* forceRegistry;
+	std::mt19937 random_generator;
+	GravityForceGenerator* gfg;
+	DragGenerator* dragg;
 };
 
