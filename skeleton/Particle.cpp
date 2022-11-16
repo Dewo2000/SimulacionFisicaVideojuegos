@@ -74,4 +74,5 @@ void Particle::clearForce()
 void Particle::addForce(const Vector3& f)
 {
 	force += f;
+
 }

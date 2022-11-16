@@ -17,7 +17,7 @@ vector<Particle*> GaussianParticleGenerator::generateParticles()
 {
     vector<Particle*>vP;
     for (int i = 0; i < _num_particles; i++) {
-        auto rp = std::normal_distribution<double>(0, 1);
+        auto rp = std::uniform_real_distribution<double>(0, 1);
         if (rp(random_generator) < generation_probability) {
             auto px = std::normal_distribution<float>( _mean_pos.x + std_dev_pos.x / 2, abs(_mean_pos.x - std_dev_pos.x / 2) );
             auto py = std::normal_distribution<float>(_mean_pos.y + std_dev_pos.y / 2, abs(_mean_pos.y - std_dev_pos.y / 2));
