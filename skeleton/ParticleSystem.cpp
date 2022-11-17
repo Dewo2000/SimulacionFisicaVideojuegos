@@ -113,7 +113,7 @@ void ParticleSystem::testForceGenerators() {
 	//DragGenerator* dg = new DragGenerator({10,0,0},0.1,0.05);
 
 	//TwisterWindGenerator* twg = new TwisterWindGenerator({ 0,0,0 }, { 0, 0, 0 },1, 0.1, 0.05);
-	BlastGenerator* bg = new BlastGenerator({ 0,0,0 }, 10000, 20);
+	BlastGenerator* bg = new BlastGenerator({ 0,0,0 }, 10000,10, 20);
 	auto size = std::uniform_real_distribution<double>(0, 10);
 	for (int i = 0; i < 20; i++) {
 		float x = size(random_generator) - 5;

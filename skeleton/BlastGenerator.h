@@ -4,8 +4,8 @@
 class BlastGenerator : public ForceGenerator
 {
 public:
-	BlastGenerator():_center((0,0,0)),_force((0,0,0)),_radius(0) {};
-	BlastGenerator(Vector3 center, float force , double radius) :_center(center), _force(force),_radius(radius) {};
+	BlastGenerator():_center((0,0,0)),_force((0,0,0)),_radius(0),explosion_constant(0) {};
+	BlastGenerator(Vector3 center, float force ,double explosion_cosnt, double radius) :_center(center), _force(force),explosion_constant(explosion_cosnt),_radius(radius) {};
 	virtual void updateForce(Particle* p, double t) {
 		Vector3 ppos = p->getPos();
 		float x = (ppos.x - _center.x);
@@ -25,10 +25,11 @@ public:
 	void setForce(float force) { _force = force; }
 	void setCenter(Vector3 center) { _center = center; }
 	void setRadius(double radius) { _radius = radius; }
+	void setConstant(double constant) { explosion_constant = constant; }
 private:
 	Vector3 _center;
 	float _force;
-	double explosion_constant=3;
+	double explosion_constant;
 	double _radius;
 	double ve = 1.235;
 	double time = 0;
