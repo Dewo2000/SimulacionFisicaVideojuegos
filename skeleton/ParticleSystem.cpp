@@ -86,6 +86,7 @@ void ParticleSystem::shootFirework(int type)
 
 void ParticleSystem::onParticleDead(Particle* p)
 {
+	forceRegistry->deleteParticleRegistry(p);
 	if (p->isFirework()) {
 		FireWork* f = (FireWork*)p;
 		auto newparticles = f->explode();
@@ -120,10 +121,20 @@ void ParticleSystem::testForceGenerators() {
 		float y = size(random_generator) - 5;
 		float z = size(random_generator) - 5;
 
-		Particle* p = new Particle({x,y,z}, { 0,0,0 }, { 0,0,0 },1, 1, { 1,1,1 }, 1000,size(random_generator));
+		Particle* p = new Particle({x,y,z}, { 0,0,0 }, { 0,0,0 },1, 1, { 1,1,1 }, 1000,100);
 		_particles.push_back(p);
 		forceRegistry->addRegistry(bg, p);
 	}
+	for (int i = 0; i < 20; i++) {
+		float x = size(random_generator) - 5;
+		float y = size(random_generator) - 5;
+		float z = size(random_generator) - 5;
+
+		Particle* p = new Particle({ x,y,z }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,0,0 }, 1000, 1);
+		_particles.push_back(p);
+		forceRegistry->addRegistry(bg, p);
+	}
+
 
 	/*Particle* p1 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, 1, { 1,1,1 }, 1000, 0.05);
 	_particles.push_back(p1);
