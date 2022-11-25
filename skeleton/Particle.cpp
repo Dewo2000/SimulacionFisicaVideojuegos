@@ -1,10 +1,11 @@
 #include "Particle.h"
 
 using namespace physx;
-Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 Acc, float Size, float Opacity, Vector3 ColorRGB, 
-	double aliveTime, float mass, bool render)
-	:vel(Vel), acc(Acc), size(Size), opacity(Opacity), color({ ColorRGB, opacity }), remainning_time(aliveTime){
+Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 Acc, float Opacity, Vector3 ColorRGB, 
+	double aliveTime, physx::PxShape* shape, float mass, bool render)
+	:vel(Vel), acc(Acc), opacity(Opacity), color({ ColorRGB, opacity }), remainning_time(aliveTime){
 
+	this->shape = shape;
 	if (mass == 0) {
 		inverss_mass = 0;
 	}
@@ -16,8 +17,9 @@ Particle::Particle(Vector3 Pos, Vector3 Vel, Vector3 Acc, float Size, float Opac
 	this->mass = mass;
 	pos = Pos;
 	pose = PxTransform(Pos);
+	
 	if (render)
-		renderItem = new RenderItem(CreateShape(PxSphereGeometry(size)), &pose, color);
+		renderItem = new RenderItem(shape, &pose, color);
 	else
 		renderItem = nullptr;
 }
@@ -30,15 +32,30 @@ Particle::~Particle()
 
 void Particle::integrate(double t)
 {
+	//if (inverss_mass <= 0) return;
+
+	//pose.p += vel * t;
+	//Vector3 totalAcc = acc;
+	//totalAcc += force * inverss_mass;
+	//vel += totalAcc * t;
+	////pose.p += vel * t;
+
+	//vel *= pow(damping, t);
+
+	//remainning_time -= t;
+
+	//clearForce();
+	//--------------------
 	if (inverss_mass <= 0) return;
 
-	pose.p += vel * t;
+	//pose.p += vel * t;
 	Vector3 totalAcc = acc;
 	totalAcc += force * inverss_mass;
 	vel += totalAcc * t;
-
+	
 	vel *= pow(damping, t);
-
+	
+	pose.p += vel * t;
 	remainning_time -= t;
 
 	clearForce();
@@ -51,7 +68,7 @@ bool Particle::isAlive()
 
 Particle* Particle::clone() const
 {
-	Particle* p = new Particle(pos, vel, acc, size, opacity, color.getXYZ(), remainning_time,true);
+	Particle* p = new Particle(pos, vel, acc, opacity, color.getXYZ(), remainning_time,shape,true);
 	return p;
 }
 
@@ -70,6 +87,7 @@ void Particle::clearForce()
 {
 	force = { 0,0,0 };
 }
+
 
 void Particle::addForce(const Vector3& f)
 {

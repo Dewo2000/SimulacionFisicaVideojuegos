@@ -64,7 +64,8 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	pSym = new ParticleSystem();
-	pSym->testForceGenerators();
+	//pSym->testForceGenerators();
+	pSym->testSpringForce();
 	//pSym->testGenerators();
 	//pSym->shootFirework(1);
 	//f = new Floor(Vector3(0, -10, 0));
@@ -123,7 +124,23 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	}
 	case 'F':
 	{
-		vP.push_back(new Proyectil(GetCamera()->getEye(), 100 * GetCamera()->getDir(), Vector3(0, -3.391, 0)));
+		pSym->addParticleForce();
+		//vP.push_back(new Proyectil(GetCamera()->getEye(), 100 * GetCamera()->getDir(), Vector3(0, -3.391, 0),CreateShape(PxSphereGeometry(1)));
+		break;
+	}
+	case 'G':
+	{
+		pSym->deleteParticleForce();
+		break;
+	}
+	case '1':
+	{
+		pSym->setK(1);
+		break;
+	}
+	case '2':
+	{
+		pSym->setK(10);
 		break;
 	}
 		

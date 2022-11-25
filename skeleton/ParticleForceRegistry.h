@@ -22,5 +22,13 @@ public:
 			}
 		}
 	}
+	void deleteParticleRegistry(ForceGenerator* fg,Particle* p) {
+		for (auto it = begin(); it != end(); it++) {
+			if (it->first==fg && it->second == p) {
+				erase(it);
+				return;
+			}
+		}
+	}
 
 };

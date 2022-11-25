@@ -1,7 +1,7 @@
 #include "FireWork.h"
 
-FireWork::FireWork(Vector3 Pos, Vector3 Vel, Vector3 Acc, float Size, float Opacity, Vector3 ColorRGB, double aliveTime, vector<shared_ptr<ParticleGenerator>>gens,float mass, bool rende):
-	Particle(Pos,Vel,Acc,Size,Opacity,ColorRGB,aliveTime,mass,rende)
+FireWork::FireWork(Vector3 Pos, Vector3 Vel, Vector3 Acc, float Opacity, Vector3 ColorRGB, double aliveTime,physx::PxShape* shape, vector<shared_ptr<ParticleGenerator>>gens,float mass, bool rende):
+	Particle(Pos,Vel,Acc,Opacity,ColorRGB,aliveTime,shape,mass,rende)
 {
 	for (auto g : gens)generators.push_back(g);
 }
@@ -22,6 +22,6 @@ vector<Particle*> FireWork::explode()
 
 Particle* FireWork::clone() const
 {
-	FireWork* p = new FireWork(pos, vel, acc, size, opacity, color.getXYZ(), remainning_time,generators,inverss_mass);
+	FireWork* p = new FireWork(pos, vel, acc, opacity, color.getXYZ(), remainning_time,shape,generators,inverss_mass);
 	return p;
 }

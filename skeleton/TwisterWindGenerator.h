@@ -21,7 +21,7 @@ public:
 		if (fabs(p->getImass()) < 1e-10)return;
 		Vector3 v = p->getVel();
 		Vector3 pos = p->getPos();
-		Vector3 twistervel = _K*Vector3(-(pos.z - _pos.z), 50 - (pos.y - _pos.y), pos.x - _pos.x);
+		Vector3 twistervel = _K*Vector3(-(pos.z - _pos.z) - pos.x - _pos.x, 50 - (pos.y - _pos.y), pos.x - _pos.x - (pos.z - _pos.z));
 		Vector3 drag_coef = twistervel - v;
 		Vector3 fforce;
 		fforce = _k1 * drag_coef + _k2 * drag_coef.magnitude() * drag_coef;

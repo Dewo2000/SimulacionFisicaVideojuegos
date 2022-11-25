@@ -7,7 +7,7 @@ class Particle
 {
 public:
 	Particle():opacity(1),remainning_time(0), renderItem(nullptr),size(1) {};
-	Particle(Vector3 Pos, Vector3 Vel, Vector3 Acc, float Size, float Opacity, Vector3 ColorRGB , double aliveTime, float mass=0, bool render=true);
+	Particle(Vector3 Pos, Vector3 Vel, Vector3 Acc,float Opacity, Vector3 ColorRGB , double aliveTime,physx::PxShape * shape, float mass=0, bool render=true);
 	~Particle();
 	void integrate(double t);
 	bool isAlive();
@@ -34,8 +34,7 @@ protected:
 	float opacity;
 	double remainning_time;
 	void clearForce();
-	
-
+	physx::PxShape* shape;
 };
 
 

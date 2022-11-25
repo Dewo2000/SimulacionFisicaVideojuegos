@@ -10,6 +10,10 @@
 #include "DragGenerator.h"
 #include "TwisterWindGenerator.h"
 #include "BlastGenerator.h"
+#include "SpringForceGenerator.h"
+#include "core.hpp"
+#include "RenderUtils.hpp"
+using namespace physx;
 using namespace std;
 
 class ParticleSystem
@@ -21,7 +25,11 @@ public:
 	void generateFireworkSystem();
 	void testGenerators();
 	void testForceGenerators();
+	void testSpringForce();
 	void shootFirework(int type);
+	void addParticleForce();
+	void deleteParticleForce();
+	void setK(double d);
 protected:
 	void onParticleDead(Particle* p);
 	vector<Particle*>_particles;

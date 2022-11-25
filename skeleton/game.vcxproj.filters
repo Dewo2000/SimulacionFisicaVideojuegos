@@ -51,6 +51,7 @@
     <ClInclude Include="DragGenerator.h" />
     <ClInclude Include="TwisterWindGenerator.h" />
     <ClInclude Include="BlastGenerator.h" />
+    <ClInclude Include="SpringForceGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
