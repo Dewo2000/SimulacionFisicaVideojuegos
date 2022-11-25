@@ -68,7 +68,7 @@ bool Particle::isAlive()
 
 Particle* Particle::clone() const
 {
-	Particle* p = new Particle(pos, vel, acc, opacity, color.getXYZ(), remainning_time,shape,true);
+	Particle* p = new Particle(pos, vel, acc, opacity, color.getXYZ(), remainning_time,shape,mass,true);
 	return p;
 }
 
