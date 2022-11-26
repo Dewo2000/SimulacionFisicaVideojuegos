@@ -11,19 +11,13 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="Proyectil.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Esfera.cpp" />
-    <ClCompile Include="ParticleGenerator.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="UniformParticleGenerator.cpp" />
     <ClCompile Include="GaussianParticleGenerator.cpp" />
     <ClCompile Include="FireWork.cpp" />
     <ClCompile Include="CircleParticleGenerator.cpp" />
-    <ClCompile Include="ForceGenerator.cpp" />
-    <ClCompile Include="ParticleForceRegistry.cpp" />
-    <ClCompile Include="TwisterWindGenerator.cpp" />
-    <ClCompile Include="BlastGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />

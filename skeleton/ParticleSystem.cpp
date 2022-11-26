@@ -179,18 +179,19 @@ void ParticleSystem::testSpringForce()
 	GravityForceGenerator* gfg = new GravityForceGenerator({ 0,-10,0 });
 	gfg->name = "gravity";
 
-	/*Particle* p1 = new Particle({ 10,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 1,0,0 }, 1000, CreateShape(PxSphereGeometry(1)), 1);
+	Particle* p1 = new Particle({ 10,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 1,0,0 }, 1000, CreateShape(PxSphereGeometry(1)), 1);
 	_particles.push_back(p1);
-	SpringForceGenerator* stat = new SpringForceGenerator(p1, 1, 10);
-	forceRegistry->addRegistry(stat, p1);
-	stat->name = "stat";
-	force_generator.push_back(stat);*/
-
-	/*Particle* p2 = new Particle({ 10,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 1,0,0 }, 1000, CreateShape(PxSphereGeometry(1)), 1);
+	Particle* p2 = new Particle({ 10,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 1,0,0 }, 1000, CreateShape(PxSphereGeometry(1)), 1);
 	_particles.push_back(p2);
-	SpringForceGenerator* stat2 = new SpringForceGenerator(p2, 1, 10);
-	forceRegistry->addRegistry(stat2, p2);
-	stat->name = "stat2";
-	force_generator.push_back(stat2);*/
+
+	SpringForceGenerator* p2Sp = new SpringForceGenerator(p1, 1, 10);
+	forceRegistry->addRegistry(p2Sp, p2);
+	p2Sp->name = "p2Sp";
+	force_generator.push_back(p2Sp);
+
+	SpringForceGenerator* p1Sp = new SpringForceGenerator(p2, 1, 10);
+	forceRegistry->addRegistry(p1Sp, p1);
+	p2Sp->name = "p1Sp";
+	force_generator.push_back(p1Sp);
 }
 
