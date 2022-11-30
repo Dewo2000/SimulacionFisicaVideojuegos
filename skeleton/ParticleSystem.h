@@ -26,10 +26,13 @@ public:
 	void testGenerators();
 	void testForceGenerators();
 	void testSpringForce();
+	void testslinky();
 	void shootFirework(int type);
 	void addParticleForce();
 	void deleteParticleForce();
 	void setK(double d);
+	void cleanScene();
+
 protected:
 	void onParticleDead(Particle* p);
 	vector<Particle*>_particles;

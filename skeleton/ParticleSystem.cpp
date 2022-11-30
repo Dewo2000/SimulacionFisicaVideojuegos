@@ -121,6 +121,22 @@ void ParticleSystem::setK(double d)
 	}
 }
 
+void ParticleSystem::cleanScene()
+{
+	delete forceRegistry;
+	for (Particle* p : _particles) {
+		delete p;
+	}
+	_particles.clear();
+	for (auto f : _fireworkpool)delete f;
+	_fireworkpool.clear();
+	for (auto pg : _particle_generators)delete pg;
+	_particle_generators.clear();
+	for (auto fg : force_generator)delete fg;
+	force_generator.clear();
+	forceRegistry = new ParticleForceRegistry();
+}
+
 void ParticleSystem::onParticleDead(Particle* p)
 {
 	forceRegistry->deleteParticleRegistry(p);
@@ -208,6 +224,47 @@ void ParticleSystem::testSpringForce()
 	forceRegistry->addRegistry(elasticp1Sp, elasticp1);
 	elasticp2Sp->name = "elasticp1Sp";
 	force_generator.push_back(elasticp1Sp);
+
+}
+
+void ParticleSystem::testslinky()
+{
+	GravityForceGenerator* gfg = new GravityForceGenerator({ 0,-10,0 });
+	Particle* p1 = new Particle({ 0,20,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 1,0,0 }, 1000, CreateShape(PxSphereGeometry(1)),1);
+	_particles.push_back(p1);
+	Particle* p2 = new Particle({ 0,15,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 0.8,0,0 }, 1000, CreateShape(PxSphereGeometry(1)), 1);
+	_particles.push_back(p2);
+	Particle* p3 = new Particle({ 0,10,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 0.6,0,0 }, 1000, CreateShape(PxSphereGeometry(1)), 1);
+	_particles.push_back(p3);
+	Particle* p4 = new Particle({ 0,5,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 0.4,0,0 }, 1000, CreateShape(PxSphereGeometry(1)), 1);
+	_particles.push_back(p4);
+	Particle* p5 = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 0.2,0,0 }, 1000, CreateShape(PxSphereGeometry(1)), 1);
+	_particles.push_back(p5);
+
+	forceRegistry->addRegistry(gfg, p1);
+	forceRegistry->addRegistry(gfg, p2);
+	forceRegistry->addRegistry(gfg, p3);
+	forceRegistry->addRegistry(gfg, p4);
+	forceRegistry->addRegistry(gfg, p5);
+
+	SpringForceGenerator* spf0 = new SpringForceGenerator(Vector3(0,25,0), 10, 5);
+	forceRegistry->addRegistry(spf0, p1);
+	force_generator.push_back(spf0);
+	SpringForceGenerator* spf1 = new SpringForceGenerator(p1, 5, 5);
+	forceRegistry->addRegistry(spf1, p2);
+	force_generator.push_back(spf1);
+	SpringForceGenerator* spf2 = new SpringForceGenerator(p2, 2, 5);
+	forceRegistry->addRegistry(spf2, p3);
+	force_generator.push_back(spf2);
+	SpringForceGenerator* spf3 = new SpringForceGenerator(p3, 1, 5);
+	forceRegistry->addRegistry(spf3, p4);
+	force_generator.push_back(spf3);
+	SpringForceGenerator* spf4 = new SpringForceGenerator(p4, 0.5, 5);
+	forceRegistry->addRegistry(spf4, p5);
+	force_generator.push_back(spf4);
+	/*SpringForceGenerator* spf5 = new SpringForceGenerator(p5, 1, 25);
+	forceRegistry->addRegistry(spf5, p1);
+	force_generator.push_back(spf5);*/
 
 }
 

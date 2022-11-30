@@ -30,5 +30,9 @@ public:
 			}
 		}
 	}
-
+	void deleteAll() {
+		for (auto it = begin(); it != end(); it++) {
+			erase(it);
+		}
+	}
 };

@@ -65,7 +65,7 @@ void initPhysics(bool interactive)
 
 	pSym = new ParticleSystem();
 	//pSym->testForceGenerators();
-	pSym->testSpringForce();
+	pSym->testslinky();
 	//pSym->testGenerators();
 	//pSym->shootFirework(1);
 	//f = new Floor(Vector3(0, -10, 0));
@@ -141,6 +141,16 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case '2':
 	{
 		pSym->setK(10);
+		break;
+	}
+	case 'B':
+	{
+		pSym->cleanScene();
+		pSym->testSpringForce();
+		break;
+	}
+	case 'S': 
+	{
 		break;
 	}
 		
