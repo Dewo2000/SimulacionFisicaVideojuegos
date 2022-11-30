@@ -181,7 +181,7 @@ void ParticleSystem::testSpringForce()
 
 	Particle* p1 = new Particle({ 10,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 1,0,0 }, 1000, CreateShape(PxSphereGeometry(1)), 1);
 	_particles.push_back(p1);
-	Particle* p2 = new Particle({ 10,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 1,0,0 }, 1000, CreateShape(PxSphereGeometry(1)), 1);
+	Particle* p2 = new Particle({ -10,0,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 0.5,0,0 }, 1000, CreateShape(PxSphereGeometry(1)), 1);
 	_particles.push_back(p2);
 
 	SpringForceGenerator* p2Sp = new SpringForceGenerator(p1, 1, 10);
@@ -193,5 +193,21 @@ void ParticleSystem::testSpringForce()
 	forceRegistry->addRegistry(p1Sp, p1);
 	p2Sp->name = "p1Sp";
 	force_generator.push_back(p1Sp);
+
+	Particle* elasticp1 = new Particle({ 10,5,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 0,1,0 }, 1000, CreateShape(PxSphereGeometry(1)), 1);
+	_particles.push_back(elasticp1);
+	Particle* elasticp2 = new Particle({ -10,5,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 0,0.5,0 }, 1000, CreateShape(PxSphereGeometry(1)), 1);
+	_particles.push_back(elasticp2);
+
+	SpringForceGenerator* elasticp2Sp = new SpringForceGenerator(elasticp1, 1, 10,true);
+	forceRegistry->addRegistry(elasticp2Sp, elasticp2);
+	elasticp2Sp->name = "elasticp2Sp";
+	force_generator.push_back(elasticp2Sp);
+
+	SpringForceGenerator* elasticp1Sp = new SpringForceGenerator(elasticp2, 1, 10,true);
+	forceRegistry->addRegistry(elasticp1Sp, elasticp1);
+	elasticp2Sp->name = "elasticp1Sp";
+	force_generator.push_back(elasticp1Sp);
+
 }
 

@@ -21,7 +21,7 @@ public:
 	float getmass() { return mass; };
 	void addForce(const Vector3& f);
 protected:
-	double damping = 0.999;
+	double damping = 0.6;
 	Vector3 vel;
 	Vector3 pos;
 	Vector3 acc;
