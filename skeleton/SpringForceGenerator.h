@@ -9,7 +9,9 @@ public:
 	};
 	SpringForceGenerator(Particle* other,double k,double l0, bool elastic = false):_other(other), _k(k), _l0(l0),_elastic(elastic) {};
 
-	~SpringForceGenerator() { delete _other; };
+	~SpringForceGenerator() {
+		delete _other; 
+	};
 
 	virtual void updateForce(Particle* p,double t) {
 

@@ -149,8 +149,10 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		pSym->testSpringForce();
 		break;
 	}
-	case 'S': 
+	case 'N': 
 	{
+		pSym->cleanScene();
+		pSym->testslinky();
 		break;
 	}
 		

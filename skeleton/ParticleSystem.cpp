@@ -230,7 +230,7 @@ void ParticleSystem::testSpringForce()
 void ParticleSystem::testslinky()
 {
 	GravityForceGenerator* gfg = new GravityForceGenerator({ 0,-10,0 });
-	Particle* p1 = new Particle({ 0,20,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 1,0,0 }, 1000, CreateShape(PxSphereGeometry(1)),1);
+	Particle* p1 = new Particle({ 0,20,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 1,0,0 }, 1000, CreateShape(PxSphereGeometry(1)));
 	_particles.push_back(p1);
 	Particle* p2 = new Particle({ 0,15,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 0.8,0,0 }, 1000, CreateShape(PxSphereGeometry(1)), 1);
 	_particles.push_back(p2);
@@ -247,19 +247,19 @@ void ParticleSystem::testslinky()
 	forceRegistry->addRegistry(gfg, p4);
 	forceRegistry->addRegistry(gfg, p5);
 
-	SpringForceGenerator* spf0 = new SpringForceGenerator(Vector3(0,25,0), 10, 5);
+	/*SpringForceGenerator* spf0 = new SpringForceGenerator(Vector3(0,25,0), 1, 5);
 	forceRegistry->addRegistry(spf0, p1);
-	force_generator.push_back(spf0);
-	SpringForceGenerator* spf1 = new SpringForceGenerator(p1, 5, 5);
+	force_generator.push_back(spf0);*/
+	SpringForceGenerator* spf1 = new SpringForceGenerator(p1, 0.5, 5);
 	forceRegistry->addRegistry(spf1, p2);
 	force_generator.push_back(spf1);
-	SpringForceGenerator* spf2 = new SpringForceGenerator(p2, 2, 5);
+	SpringForceGenerator* spf2 = new SpringForceGenerator(p2, 0.5, 5);
 	forceRegistry->addRegistry(spf2, p3);
 	force_generator.push_back(spf2);
-	SpringForceGenerator* spf3 = new SpringForceGenerator(p3, 1, 5);
+	SpringForceGenerator* spf3 = new SpringForceGenerator(p3, 0.5, 3);
 	forceRegistry->addRegistry(spf3, p4);
 	force_generator.push_back(spf3);
-	SpringForceGenerator* spf4 = new SpringForceGenerator(p4, 0.5, 5);
+	SpringForceGenerator* spf4 = new SpringForceGenerator(p4, 0.8, 2);
 	forceRegistry->addRegistry(spf4, p5);
 	force_generator.push_back(spf4);
 	/*SpringForceGenerator* spf5 = new SpringForceGenerator(p5, 1, 25);
