@@ -5,7 +5,7 @@
 class Floor
 {
 public:
-	Floor(Vector3 Pos);
+	Floor(Vector3 Pos,Vector4 color);
 private:
 	physx::PxTransform pos;
 	RenderItem* renderItem;

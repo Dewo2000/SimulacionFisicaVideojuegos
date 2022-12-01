@@ -1,8 +1,7 @@
 #include "Floor.h"
 using namespace physx;
-Floor::Floor(Vector3 Pos)
+Floor::Floor(Vector3 Pos, Vector4 color)
 {
 	pos = PxTransform(Pos);
-	Vector4 const color = { 0,1,0,1 };
-	renderItem = new RenderItem(CreateShape(PxBoxGeometry(100,1,100)), &pos, color);
+	renderItem = new RenderItem(CreateShape(PxBoxGeometry(50,0.2,50)), &pos, color);
 }

@@ -269,6 +269,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BlastGenerator.h" />
+    <ClInclude Include="BuoyancyForceGenerator.h" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="CircleParticleGenerator.h" />
     <ClInclude Include="core.hpp" />

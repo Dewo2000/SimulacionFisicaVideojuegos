@@ -268,3 +268,27 @@ void ParticleSystem::testslinky()
 
 }
 
+void ParticleSystem::testbuoyancy(float V, float mass)
+{
+	Floor* f = new Floor(Vector3(0, 0, 0), { 0.1, 0.2, 1, 1 });
+	GravityForceGenerator* gfg = new GravityForceGenerator({ 0,-10,0 });
+	BuoyancyForceGenerator* bgf = new BuoyancyForceGenerator(1, V, 997); //Agua
+	Particle* p1 = new Particle({ 0,10,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 1,0,0 }, 1000, CreateShape(PxBoxGeometry(2,5,2)), mass);
+	_particles.push_back(p1);
+	forceRegistry->addRegistry(gfg, p1);
+	forceRegistry->addRegistry(bgf, p1);
+}
+
+void ParticleSystem::gasolina(float V, float mass)
+{
+	Floor* f = new Floor(Vector3(0, 0, 0), { 0.17, 0.34, 0.17, 1 });
+	GravityForceGenerator* gfg = new GravityForceGenerator({ 0,-10,0 });
+	BuoyancyForceGenerator* bgf = new BuoyancyForceGenerator(1, V, 720); //gasolina 
+	DragGenerator* dg = new DragGenerator(Vector3(0, 0, 0), 2, 0);
+	Particle* p1 = new Particle({ 0,10,0 }, { 0,0,0 }, { 0,0,0 }, 1, { 1,0,0 }, 1000, CreateShape(PxBoxGeometry(2,5,2)), mass);
+	_particles.push_back(p1);
+	forceRegistry->addRegistry(gfg, p1);
+	forceRegistry->addRegistry(bgf, p1);
+	forceRegistry->addRegistry(dg, p1);
+}
+

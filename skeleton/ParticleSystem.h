@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include"Floor.h"
 #include"Particle.h"
 #include"FireWork.h"
 #include"GaussianParticleGenerator.h"
@@ -11,6 +12,7 @@
 #include "TwisterWindGenerator.h"
 #include "BlastGenerator.h"
 #include "SpringForceGenerator.h"
+#include "BuoyancyForceGenerator.h"
 #include "core.hpp"
 #include "RenderUtils.hpp"
 using namespace physx;
@@ -27,6 +29,8 @@ public:
 	void testForceGenerators();
 	void testSpringForce();
 	void testslinky();
+	void testbuoyancy(float V, float mass);
+	void gasolina(float V, float mass);
 	void shootFirework(int type);
 	void addParticleForce();
 	void deleteParticleForce();

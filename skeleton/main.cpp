@@ -65,7 +65,7 @@ void initPhysics(bool interactive)
 
 	pSym = new ParticleSystem();
 	//pSym->testForceGenerators();
-	pSym->testslinky();
+	pSym->testbuoyancy(1, 100);
 	//pSym->testGenerators();
 	//pSym->shootFirework(1);
 	//f = new Floor(Vector3(0, -10, 0));
@@ -135,22 +135,32 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	}
 	case '1':
 	{
-		pSym->setK(1);
+		pSym->cleanScene();
+		pSym->testbuoyancy(1,100);
 		break;
 	}
 	case '2':
 	{
-		pSym->setK(10);
+		pSym->cleanScene();
+		pSym->testbuoyancy(1, 1000);
 		break;
 	}
-	case 'B':
+	case '3':
 	{
 		pSym->cleanScene();
-		pSym->testSpringForce();
+		pSym->testbuoyancy(10, 100);
 		break;
 	}
-	case 'S': 
+	case '4':
 	{
+		pSym->cleanScene();
+		pSym->testbuoyancy(10, 1000);
+		break;
+	}
+	case '5':
+	{
+		pSym->cleanScene();
+		pSym->gasolina(1, 100);
 		break;
 	}
 		

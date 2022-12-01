@@ -46,6 +46,7 @@
     <ClInclude Include="TwisterWindGenerator.h" />
     <ClInclude Include="BlastGenerator.h" />
     <ClInclude Include="SpringForceGenerator.h" />
+    <ClInclude Include="BuoyancyForceGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
