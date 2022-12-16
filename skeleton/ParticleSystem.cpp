@@ -142,13 +142,13 @@ void ParticleSystem::solidRigid(PxPhysics* p, PxScene* s)
 {
 	auto materialdata = std::uniform_real_distribution<float>(0, 2);
 	PxMaterial* material = p->createMaterial(0, 0, 0);
-	RigidParticle* rp = new RigidParticle({ 0,0,0 },{ 0,0,0 },{ 1,0,0,1},CreateShape(PxSphereGeometry(1)),1,p,s,material);
+	RigidParticle* rp = new RigidParticle({ 0,0,0 },{ 0,0,0 },{ 1,0,0,1},CreateShape(PxBoxGeometry(1,1,1)),1,p,s,material);
 	GaussianParticleGenerator* gG = new GaussianParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 1,1,1 }, { 1,1,1 }, 0.1, 1,true);
 	gG->setPxParticle(rp);
 	_particle_generators.push_back(gG);
 
 	PxMaterial* material2 = p->createMaterial(0, 20, 10);
-	RigidParticle* rp2 = new RigidParticle({ 0,0,0 }, { 0,0,0 }, { 0,1,0,1 }, CreateShape(PxSphereGeometry(1)), 1, p, s, material2);
+	RigidParticle* rp2 = new RigidParticle({ 0,0,0 }, { 0,0,0 }, { 0,1,0,1 }, CreateShape(PxBoxGeometry(1, 1, 1)), 1, p, s, material2);
 	GaussianParticleGenerator* gG2 = new GaussianParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 1,1,1 }, { 1,1,1 }, 0.1, 1, true);
 	gG2->setPxParticle(rp2);
 	_particle_generators.push_back(gG2);

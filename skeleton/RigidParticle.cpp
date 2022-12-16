@@ -14,6 +14,7 @@ RigidParticle::RigidParticle(Vector3 Pos, Vector3 Vel, Vector4 ColorRGBA, PxShap
 	if (material != nullptr)_shape->setMaterials(&material, 1);
 	PxRigidDynamic* solid; 
 	solid = _gphysic->createRigidDynamic(pose);
+
 	solid->setLinearVelocity(vel);
 	solid->setAngularVelocity({ 0,0,0 });
 	solid->attachShape(*_shape);
