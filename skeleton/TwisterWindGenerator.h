@@ -12,11 +12,6 @@ public:
 
 	};
 	virtual void updateForce(Particle* p, double t) {
-		float Aeff = 1;
-		float Cd = 0.5;
-		float densidad = 1.29;
-		float F = Aeff * Cd * densidad;
-
 
 		if (fabs(p->getImass()) < 1e-10)return;
 		Vector3 v = p->getVel();
@@ -28,7 +23,21 @@ public:
 		p->addForce(fforce);
 	}
 
+	virtual void updateForce(RigidParticle* p, double t) {
+		if (activatedTwister) {
+			if (fabs(p->getImass()) < 1e-10)return;
+			Vector3 v = p->getVel();
+			Vector3 pos = p->getPos();
+			Vector3 twistervel = _K * Vector3(-(pos.z - _pos.z) - pos.x - _pos.x, 50 - (pos.y - _pos.y), pos.x - _pos.x - (pos.z - _pos.z));
+			Vector3 drag_coef = twistervel - v;
+			Vector3 fforce;
+			fforce = _k1 * drag_coef + _k2 * drag_coef.magnitude() * drag_coef;
+			p->getSolid()->addForce(fforce);
+		}
+	}
+	void activate() { activatedTwister=!activatedTwister; }
 protected:
 	Vector3 _pos;
 	float _K;
+	bool activatedTwister=true;
 };

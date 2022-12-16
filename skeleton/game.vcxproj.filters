@@ -49,6 +49,7 @@
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="BuoyancyForceGenerator.h" />
     <ClInclude Include="RigidParticle.h" />
+    <ClInclude Include="RigidForceRegistry.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

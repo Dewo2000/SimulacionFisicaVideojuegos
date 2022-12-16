@@ -125,43 +125,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	}
 	case 'F':
 	{
-		pSym->addParticleForce();
-		//vP.push_back(new Proyectil(GetCamera()->getEye(), 100 * GetCamera()->getDir(), Vector3(0, -3.391, 0),CreateShape(PxSphereGeometry(1)));
-		break;
-	}
-	case 'G':
-	{
-		pSym->deleteParticleForce();
-		break;
-	}
-	case '1':
-	{
-		pSym->cleanScene();
-		pSym->testbuoyancy(1,100);
-		break;
-	}
-	case '2':
-	{
-		pSym->cleanScene();
-		pSym->testbuoyancy(1, 1000);
-		break;
-	}
-	case '3':
-	{
-		pSym->cleanScene();
-		pSym->testbuoyancy(10, 100);
-		break;
-	}
-	case '4':
-	{
-		pSym->cleanScene();
-		pSym->testbuoyancy(10, 1000);
-		break;
-	}
-	case '5':
-	{
-		pSym->cleanScene();
-		pSym->gasolina(1, 100);
+		pSym->activateTwister();
 		break;
 	}
 		

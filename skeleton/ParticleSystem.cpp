@@ -3,13 +3,17 @@
 ParticleSystem::ParticleSystem()
 {
 	forceRegistry = new ParticleForceRegistry();
+	rigidForceRegistry = new RigidForceRegistry();
 	std:random_device r;
 	random_generator = std::mt19937(r());
+	twg = new TwisterWindGenerator({ 0,0,0 }, { 0, 0, 0 }, 2, 0.1, 0.05);
 }
 
 void ParticleSystem::update(double t)
 {
 	forceRegistry->updateForces(t);
+	rigidForceRegistry->updateForces(t);
+
 	for (int i = 0; i < _particles.size(); i++) {
 
 		_particles[i]->integrate(t);
@@ -22,11 +26,16 @@ void ParticleSystem::update(double t)
 	for (ParticleGenerator* g:_particle_generators)
 	{
 		vector<Particle*> aux=  g->generateParticles();
-		g->generatePxParticles();
+		
 		for (Particle* p : aux)
 		{
 			_particles.push_back(p);
 		}
+	/*	vector<RigidParticle*> aux2 = g->generatePxParticles();
+		for (RigidParticle* p : aux2)
+		{
+			_rgparticles.push_back(p);
+		}*/
 	}
 	
 }
@@ -140,21 +149,36 @@ void ParticleSystem::cleanScene()
 
 void ParticleSystem::solidRigid(PxPhysics* p, PxScene* s)
 {
-	auto materialdata = std::uniform_real_distribution<float>(0, 2);
-	PxMaterial* material = p->createMaterial(0, 0, 0);
-	RigidParticle* rp = new RigidParticle({ 0,0,0 },{ 0,0,0 },{ 1,0,0,1},CreateShape(PxSphereGeometry(1)),1,p,s,material);
-	GaussianParticleGenerator* gG = new GaussianParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 1,1,1 }, { 1,1,1 }, 0.1, 1,true);
-	gG->setPxParticle(rp);
-	_particle_generators.push_back(gG);
 
-	PxMaterial* material2 = p->createMaterial(0, 20, 10);
-	RigidParticle* rp2 = new RigidParticle({ 0,0,0 }, { 0,0,0 }, { 0,1,0,1 }, CreateShape(PxSphereGeometry(1)), 1, p, s, material2);
-	GaussianParticleGenerator* gG2 = new GaussianParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 1,1,1 }, { 1,1,1 }, 0.1, 1, true);
-	gG2->setPxParticle(rp2);
-	_particle_generators.push_back(gG2);
+	
+	GravityForceGenerator* gfg = new GravityForceGenerator({ 0,-10,0 });
+	BlastGenerator* bg = new BlastGenerator({ 0,0,0 }, 10000, 10,20);
+	
+	RigidParticle* rp = new RigidParticle({ 10,0,0 },{ 0,0,0 },{ 1,0,0,1},CreateShape(PxSphereGeometry(1)),1,p,s);
+	_rgparticles.push_back(rp);
+	rigidForceRegistry->addRegistry(bg, rp);
+
+	auto size1 = std::uniform_real_distribution<double>(0, 10);
+	for (int i = 0; i < 20; i++) {
+		float x = size1(random_generator) - 5;
+		float y = size1(random_generator) - 5;
+		float z = size1(random_generator) - 5;
+
+		RigidParticle* rp = new RigidParticle({ x,y,z }, { 0,0,0 }, { 1,0,0,1 }, CreateShape(PxSphereGeometry(1)), 1, p, s);
+		rigidForceRegistry->addRegistry(bg, rp);
+	}
+	for (int i = 0; i < 20; i++) {
+		float x = size1(random_generator) - 5;
+		float y = size1(random_generator) - 5;
+		float z = size1(random_generator) - 5;
+
+		RigidParticle* rp = new RigidParticle({ x,y,z }, { 0,0,0 }, { 0,1,0,1 }, CreateShape(PxSphereGeometry(1)), 1, p, s);
+		_rgparticles.push_back(rp);
+		rigidForceRegistry->addRegistry(twg, rp);
+	}
 
 	PxRigidStatic* suelo = p->createRigidStatic(PxTransform{ 0,-10,0 });
-	PxShape* sueloShape = CreateShape(PxBoxGeometry( 100,0.1,100 ));
+	PxShape* sueloShape = CreateShape(PxBoxGeometry(100, 0.1, 100));
 	suelo->attachShape(*sueloShape);
 	RenderItem* renderItem = new RenderItem(sueloShape, suelo, { 0.8,1,0,0.5 });
 	s->addActor(*suelo);
@@ -164,11 +188,17 @@ void ParticleSystem::solidRigid(PxPhysics* p, PxScene* s)
 		float y = size(random_generator) - 10;
 		float z = size(random_generator) - 20;
 		PxRigidStatic* box = p->createRigidStatic(PxTransform{ x,y,z });
-		PxShape* bShape = CreateShape(PxBoxGeometry(2,2,2));
+		PxShape* bShape = CreateShape(PxBoxGeometry(2, 2, 2));
 		box->attachShape(*bShape);
 		RenderItem* renderItem = new RenderItem(bShape, box, { 0,0.2,1,0.2 });
 		s->addActor(*box);
 	}
+
+}
+
+void ParticleSystem::activateTwister()
+{
+	twg->activate();
 }
 
 void ParticleSystem::onParticleDead(Particle* p)

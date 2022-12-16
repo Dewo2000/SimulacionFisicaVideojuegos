@@ -17,6 +17,7 @@
 #include "RenderUtils.hpp"
 
 #include "RigidParticle.h"
+#include "RigidForceRegistry.h"
 using namespace physx;
 using namespace std;
 
@@ -39,15 +40,21 @@ public:
 	void setK(double d);
 	void cleanScene();
 	void solidRigid(PxPhysics* p, PxScene* s);
+
+	void activateTwister();
 protected:
 	void onParticleDead(Particle* p);
 	vector<Particle*>_particles;
+	vector<RigidParticle*>_rgparticles;
 	vector<FireWork*>_fireworkpool;
 	vector<ParticleGenerator*>_particle_generators;
 	vector<ForceGenerator*>force_generator;
 	std::mt19937 random_generator;
 	Vector3 _gravity = {0,-10,0};
 	ParticleForceRegistry* forceRegistry;
+	RigidForceRegistry* rigidForceRegistry;
 	BlastGenerator* bg;
+	
+	TwisterWindGenerator* twg;
 };
 

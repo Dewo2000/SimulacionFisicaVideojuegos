@@ -9,7 +9,10 @@ class ParticleGenerator
 public:
 	void setParticle(Particle* model) { _model = model; }
 	virtual vector<Particle*> generateParticles() = 0;
-	virtual void generatePxParticles() {};
+	virtual vector<RigidParticle*> generatePxParticles() {
+		vector<RigidParticle*>vP;
+		return vP;
+	};
 	void setPxParticle(RigidParticle* model) { pxmodel = model; };
 protected:
 	string _name;

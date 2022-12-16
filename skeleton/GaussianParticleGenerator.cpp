@@ -42,8 +42,9 @@ vector<Particle*> GaussianParticleGenerator::generateParticles()
     return vP;
 }
 
-void GaussianParticleGenerator::generatePxParticles()
+vector<RigidParticle*> GaussianParticleGenerator::generatePxParticles()
 {
+    vector<RigidParticle*>vP;
     if (solidRigid) {
         for (int i = 0; i < _num_particles && actualParticles < MAXPARTICLES; i++) {
             auto rp = std::normal_distribution<double>(0, 1);
@@ -58,9 +59,11 @@ void GaussianParticleGenerator::generatePxParticles()
                 Vector3 pos = Vector3(px(random_generator), py(random_generator), pz(random_generator));
                 Vector3 vel = Vector3(vx(random_generator), vy(random_generator), vz(random_generator));
 
-                pxmodel->clone(pos, vel);
+                RigidParticle* rp = pxmodel->clone(pos, vel);
                 actualParticles++;
+                vP.push_back(rp);
             }
         }
     }
+    return vP;
 }
