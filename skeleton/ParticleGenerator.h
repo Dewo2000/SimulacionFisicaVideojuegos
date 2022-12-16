@@ -21,6 +21,6 @@ protected:
 	int _num_particles , actualParticles=0;
 	Particle* _model=nullptr;
 	RigidParticle* pxmodel;
-	const int MAXPARTICLES = 10000;
+	const int MAXPARTICLES = 100;
 	bool solidRigid = false;
 };
