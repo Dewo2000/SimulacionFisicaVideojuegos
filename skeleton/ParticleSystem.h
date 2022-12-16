@@ -15,6 +15,8 @@
 #include "BuoyancyForceGenerator.h"
 #include "core.hpp"
 #include "RenderUtils.hpp"
+
+#include "RigidParticle.h"
 using namespace physx;
 using namespace std;
 
@@ -36,7 +38,7 @@ public:
 	void deleteParticleForce();
 	void setK(double d);
 	void cleanScene();
-
+	void solidRigid(PxPhysics* p, PxScene* s);
 protected:
 	void onParticleDead(Particle* p);
 	vector<Particle*>_particles;

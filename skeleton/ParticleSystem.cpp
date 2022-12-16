@@ -22,6 +22,7 @@ void ParticleSystem::update(double t)
 	for (ParticleGenerator* g:_particle_generators)
 	{
 		vector<Particle*> aux=  g->generateParticles();
+		g->generatePxParticles();
 		for (Particle* p : aux)
 		{
 			_particles.push_back(p);
@@ -135,6 +136,39 @@ void ParticleSystem::cleanScene()
 	for (auto fg : force_generator)delete fg;
 	force_generator.clear();
 	forceRegistry = new ParticleForceRegistry();
+}
+
+void ParticleSystem::solidRigid(PxPhysics* p, PxScene* s)
+{
+	auto materialdata = std::uniform_real_distribution<float>(0, 2);
+	PxMaterial* material = p->createMaterial(0, 0, 0);
+	RigidParticle* rp = new RigidParticle({ 0,0,0 },{ 0,0,0 },{ 1,0,0,1},CreateShape(PxSphereGeometry(1)),1,p,s,material);
+	GaussianParticleGenerator* gG = new GaussianParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 1,1,1 }, { 1,1,1 }, 0.1, 1,true);
+	gG->setPxParticle(rp);
+	_particle_generators.push_back(gG);
+
+	PxMaterial* material2 = p->createMaterial(0, 20, 10);
+	RigidParticle* rp2 = new RigidParticle({ 0,0,0 }, { 0,0,0 }, { 0,1,0,1 }, CreateShape(PxSphereGeometry(1)), 1, p, s, material2);
+	GaussianParticleGenerator* gG2 = new GaussianParticleGenerator({ 0,0,0 }, { 0,0,0 }, { 1,1,1 }, { 1,1,1 }, 0.1, 1, true);
+	gG2->setPxParticle(rp2);
+	_particle_generators.push_back(gG2);
+
+	PxRigidStatic* suelo = p->createRigidStatic(PxTransform{ 0,-10,0 });
+	PxShape* sueloShape = CreateShape(PxBoxGeometry( 100,0.1,100 ));
+	suelo->attachShape(*sueloShape);
+	RenderItem* renderItem = new RenderItem(sueloShape, suelo, { 0.8,1,0,0.5 });
+	s->addActor(*suelo);
+	auto size = std::uniform_real_distribution<double>(0, 40);
+	for (int i = 0; i < 6; i++) {
+		float x = size(random_generator) - 20;
+		float y = size(random_generator) - 10;
+		float z = size(random_generator) - 20;
+		PxRigidStatic* box = p->createRigidStatic(PxTransform{ x,y,z });
+		PxShape* bShape = CreateShape(PxBoxGeometry(2,2,2));
+		box->attachShape(*bShape);
+		RenderItem* renderItem = new RenderItem(bShape, box, { 0,0.2,1,0.2 });
+		s->addActor(*box);
+	}
 }
 
 void ParticleSystem::onParticleDead(Particle* p)
@@ -265,7 +299,7 @@ void ParticleSystem::testslinky()
 	/*SpringForceGenerator* spf5 = new SpringForceGenerator(p5, 1, 25);
 	forceRegistry->addRegistry(spf5, p1);
 	force_generator.push_back(spf5);*/
-
+	
 }
 
 void ParticleSystem::testbuoyancy(float V, float mass)

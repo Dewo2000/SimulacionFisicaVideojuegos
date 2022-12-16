@@ -265,6 +265,7 @@
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
+    <ClCompile Include="RigidParticle.cpp" />
     <ClCompile Include="UniformParticleGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -288,6 +289,7 @@
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
+    <ClInclude Include="RigidParticle.h" />
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="TwisterWindGenerator.h" />
     <ClInclude Include="UniformParticleGenerator.h" />
