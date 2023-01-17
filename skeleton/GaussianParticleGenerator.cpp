@@ -34,7 +34,7 @@ vector<Particle*> GaussianParticleGenerator::generateParticles()
 
                 Particle* p = _model->clone();
                 p->setVel(vel);
-                p->setPos(_mean_pos);
+                p->setPos(pos);
                 vP.push_back(p);
             }
         }

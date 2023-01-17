@@ -42,6 +42,8 @@ public:
 	void solidRigid(PxPhysics* p, PxScene* s);
 
 	void activateTwister();
+
+	void game(PxPhysics* p, PxScene* s);
 protected:
 	void onParticleDead(Particle* p);
 	vector<Particle*>_particles;
@@ -56,5 +58,8 @@ protected:
 	BlastGenerator* bg;
 	
 	TwisterWindGenerator* twg;
+
+	double acumulatedtime = 0;
+	double generateTime = 0;
 };
 

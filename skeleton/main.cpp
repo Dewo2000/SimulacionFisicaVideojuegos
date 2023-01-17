@@ -70,7 +70,8 @@ void initPhysics(bool interactive)
 	//pSym->shootFirework(1);
 	//f = new Floor(Vector3(0, -10, 0));
 	//e = new Esfera(Vector3(0, 20, -100));
-	pSym->solidRigid(gPhysics, gScene);
+	//pSym->solidRigid(gPhysics, gScene);
+	pSym->game(gPhysics, gScene);
 }
 
 

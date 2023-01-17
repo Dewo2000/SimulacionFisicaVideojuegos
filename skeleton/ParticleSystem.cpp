@@ -13,7 +13,7 @@ void ParticleSystem::update(double t)
 {
 	forceRegistry->updateForces(t);
 	rigidForceRegistry->updateForces(t);
-
+	acumulatedtime += t;
 	for (int i = 0; i < _particles.size(); i++) {
 
 		_particles[i]->integrate(t);
@@ -23,14 +23,18 @@ void ParticleSystem::update(double t)
 			_particles.erase(_particles.begin() + i);
 		}
 	}
-	for (ParticleGenerator* g:_particle_generators)
-	{
-		vector<Particle*> aux=  g->generateParticles();
-		
-		for (Particle* p : aux)
+	if (generateTime + 1 < acumulatedtime) {
+		generateTime = acumulatedtime;
+		for (ParticleGenerator* g : _particle_generators)
 		{
-			_particles.push_back(p);
-		}
+			vector<Particle*> aux = g->generateParticles();
+
+			for (Particle* p : aux)
+			{
+				_particles.push_back(p);
+			}
+	}
+
 	/*	vector<RigidParticle*> aux2 = g->generatePxParticles();
 		for (RigidParticle* p : aux2)
 		{
@@ -199,6 +203,23 @@ void ParticleSystem::solidRigid(PxPhysics* p, PxScene* s)
 void ParticleSystem::activateTwister()
 {
 	twg->activate();
+}
+
+void ParticleSystem::game(PxPhysics* p, PxScene* s)
+{
+	//PxRigidStatic* suelo = p->createRigidStatic(PxTransform{ 0,-10,0 });
+	//PxShape* sueloShape = CreateShape(PxBoxGeometry(100,0.1,100));
+	//suelo->attachShape(*sueloShape);
+	//RenderItem* renderItem = new RenderItem(sueloShape, suelo, { 0.8,1,0,0.5 });
+	//s->addActor(*suelo);
+
+	//RigidParticle* rp = new RigidParticle({ 10,0,0 }, { 0,0,0 }, { 1,0,0,1 }, CreateShape(PxSphereGeometry(1)), 1, p, s);
+	//_rgparticles.push_back(rp);
+	//rigidForceRegistry->addRegistry(bg, rp);
+	Particle* pt = new Particle({ 0,0,0 }, { 0,0,0 }, { 0,0,0 }, 0.5, { 1,0,0 }, 4, CreateShape(PxSphereGeometry(1)), 1);
+	GaussianParticleGenerator* gG = new GaussianParticleGenerator({ -30,20,0 }, { 0,0,0 }, { 30,21,1 }, { 10,10,10 },1,5);
+	gG->setParticle(pt);
+	_particle_generators.push_back(gG);
 }
 
 void ParticleSystem::onParticleDead(Particle* p)
