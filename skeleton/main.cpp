@@ -19,6 +19,7 @@ std::string display_text = "SPACE TO START";
 std::string start = "KEEP ALIVE FOR 60 SECONDS";
 std::string start2 = "DO NOT TOUCH LIMITS WALL AND SPHERES";
 std::string start3 = "KEY 1&2 FOR SKILL,ONCE PER GAME,PENALTY IF BOTH IS USED";
+std::string start4 = "LEFT/J RIGHT/L STOP/K";
 std::string winlose = "";
 using namespace physx;
 
@@ -76,7 +77,18 @@ void initPhysics(bool interactive)
 	//pSym->solidRigid(gPhysics, gScene);
 	//pSym->game();
 }
-
+void setText() {
+	start = "KEEP ALIVE FOR 60 SECONDS";
+	start2 = "DO NOT TOUCH LIMITS WALL AND SPHERES";
+	start3 = "KEY 1&2 FOR SKILL,ONCE PER GAME,PENALTY IF BOTH IS USED";
+	start4 = "LEFT/J RIGHT/L STOP/K";
+}
+void clearText() {
+	start = "";
+	start2 = "";
+	start3 = "";
+	start4 = "";
+}
 
 // Function to configure what happens in each step of physics
 // interactive: true if the game is rendering, false if it offline
@@ -88,10 +100,14 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 	pSym->update(t);
-	if (gameStart && !pSym->isFinish())
+	if (gameStart && !pSym->isFinish()) {
+		clearText();
 		display_text = to_string(pSym->getTime());
-	else
+	}
+	else {
+		setText();
 		display_text = "SPACE TO START";
+	}
 	if (pSym->isFinish()) {
 		if (pSym->isWin()) {
 			winlose = "WIN";
@@ -191,6 +207,7 @@ void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 	PX_UNUSED(actor1);
 	PX_UNUSED(actor2);
 }
+
 
 
 int main(int, const char*const*)
