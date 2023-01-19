@@ -286,6 +286,12 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	// Display text
+	glColor4f(1.0f, 0.2f, 0.2f, 1.0f);
+	drawText(display_text, 0, 400);
+	drawText(start,150, 500);
+	drawText(start2,100, 480);
+	drawText(winlose, 240, 300);
 	// Setup camera
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -298,6 +304,29 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 	glColor4f(0.4f, 0.4f, 0.4f, 1.0f);
 
 	assert(glGetError() == GL_NO_ERROR);
+}
+void drawText(const std::string& text, int x, int y)
+{
+	glMatrixMode(GL_PROJECTION);
+	double* matrix = new double[16];
+	glGetDoublev(GL_PROJECTION_MATRIX, matrix);
+	glLoadIdentity();
+	glOrtho(0, 512, 0, 512, -5, 5);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glPushMatrix();
+	//glLoadIdentity();
+	glRasterPos2i(x, y);
+
+	int length = text.length();
+
+	for (int i = 0; i < length; i++) {
+		glutBitmapCharacter(GLUT_BITMAP_9_BY_15, (int)text[i]);
+	}
+	glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixd(matrix);
+	glMatrixMode(GL_MODELVIEW);
 }
 
 void renderShape(const PxShape& shape, const PxTransform& transform, const PxVec4& color)

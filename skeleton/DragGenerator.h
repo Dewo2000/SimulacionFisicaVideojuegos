@@ -14,6 +14,14 @@ public:
 		fforce = _k1 * drag_coef + _k2 * drag_coef.magnitude() * drag_coef;
 		p->addForce(fforce);
 	}
+	virtual void updateForce(RigidParticle* p, double t) {
+		if (fabs(p->getImass()) < 1e-10)return;
+		Vector3 v = p->getVel();
+		Vector3 drag_coef = windforce - v;
+		Vector3 fforce;
+		fforce = _k1 * drag_coef + _k2 * drag_coef.magnitude() * drag_coef;
+		p->addForce(fforce);
+	}
 	inline void setDrag(float k1, float k2) { _k1 = k1; _k2 = k2; }
 	inline float getK1() { return _k1; }
 	inline float getK2() { return _k2; }

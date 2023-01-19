@@ -21,26 +21,82 @@ RigidParticle::RigidParticle(Vector3 Pos, Vector3 Vel, Vector4 ColorRGBA, PxShap
 	solid->setMass(mass);
 	if (_shape->getGeometryType() == PxGeometryType::eBOX) {
 		Vector3 size = _shape->getGeometry().box().halfExtents;
-		//solid->setMassSpaceInertiaTensor({ size.y * size.z,size.x * size.z,size.y * size.x });
+		solid->setMassSpaceInertiaTensor({ size.y * size.z,size.x * size.z,size.y * size.x });
 	}
 	else {
 		float size = _shape->getGeometry().sphere().radius;
 		float size2 = size * size;
-		//solid->setMassSpaceInertiaTensor({size2,size2,size2});
+		solid->setMassSpaceInertiaTensor({size2,size2,size2});
 	}
 	_scene->addActor(*solid);
+
+	std:random_device r;
+	random_generator = std::mt19937(r());
 }
 
-RigidParticle* RigidParticle::clone(Vector3 Pos, Vector3 Vel)
+RigidParticle* RigidParticle::clone(Vector3 Pos, Vector3 Vel,Vector4 Color,bool random)
 {
+	auto siz = std::uniform_real_distribution<float>(1, 2);
 	PxShape* shape;
-	if (_shape->getGeometryType() == PxGeometryType::eBOX) {
-		Vector3 size = _shape->getGeometry().box().halfExtents;
-		shape = CreateShape(PxBoxGeometry(size));
+	if (_shape->getGeometryType() == PxGeometryType::eBOX) {		
+		if (random) {
+			Vector3 size = Vector3(siz(random_generator), siz(random_generator), siz(random_generator));
+			shape = CreateShape(PxBoxGeometry(size));
+		}
+		else
+		{
+			Vector3 size = _shape->getGeometry().box().halfExtents;
+			shape = CreateShape(PxBoxGeometry(size));
+		}
 	}
 	else {
-		float size = _shape->getGeometry().sphere().radius;
-		shape = CreateShape(PxSphereGeometry(size));
+		if (random) {
+			float size = siz(random_generator);
+			shape = CreateShape(PxSphereGeometry(size));
+		}
+		else
+		{
+			float size = _shape->getGeometry().sphere().radius;
+			shape = CreateShape(PxSphereGeometry(size));
+		}
 	}
-	return new RigidParticle(Pos, Vel, color, shape, _mass, _gphysic, _scene, _material);
+	if (Color != Vector4(0, 0, 0, 0)) {
+		color = Color;
+	}
+	if(random)
+		return new RigidParticle(Pos, Vel, color, shape, _mass, _gphysic, _scene, _material);
+	else
+		return new RigidParticle(Pos, Vel, color, shape, _mass, _gphysic, _scene, _material);
+}
+
+void RigidParticle::addForce(Vector3 force)
+{
+	solid->addForce(force);
+}
+
+void RigidParticle::clearForce()
+{
+	solid->clearForce();
+	solid->setLinearVelocity({ 0,0,0 });
+	solid->setAngularVelocity({ 0,0,0 });
+}
+
+bool RigidParticle::integrate(double t)
+{
+	time += t;
+	if (time > aliveTime) {
+		release();
+		return true;
+	}
+	if (solid->getGlobalPose().p.y < -100) {
+		release();
+		return true;
+	}
+	return false;
+}
+
+void RigidParticle::release()
+{
+	renderItem->release();
+	solid->release();
 }

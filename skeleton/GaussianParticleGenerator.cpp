@@ -56,10 +56,13 @@ vector<RigidParticle*> GaussianParticleGenerator::generatePxParticles()
                 auto vy = std::normal_distribution<float>(_mean_vel.y + std_dev_vel.y / 2, abs(_mean_vel.y - std_dev_vel.y / 2));
                 auto vz = std::normal_distribution<float>(_mean_vel.z + std_dev_vel.z / 2, abs(_mean_vel.z - std_dev_vel.z / 2));
 
-                Vector3 pos = Vector3(px(random_generator), py(random_generator), pz(random_generator));
-                Vector3 vel = Vector3(vx(random_generator), vy(random_generator), vz(random_generator));
+                Vector3 pos = Vector3(px(random_generator), py(random_generator), 0);
+                Vector3 vel = Vector3(vx(random_generator), vy(random_generator), 0);
 
-                RigidParticle* rp = pxmodel->clone(pos, vel);
+
+                auto col = std::normal_distribution<float>(0, 1);
+                RigidParticle* rp = pxmodel->clone(pos, vel,{col(random_generator),col(random_generator),col(random_generator) ,col(random_generator) },true);
+
                 actualParticles++;
                 vP.push_back(rp);
             }

@@ -13,7 +13,7 @@ public:
 	virtual void updateForce(Particle* p, double t) {
 		float h = p->getPos().y;
 		//float h0 = l_particle->getPos().y;
-		float h0 = 0;
+		float h0 = -110;
 		Vector3 f(0, 0, 0);
 		float immersed = 0.0;
 		if (h - h0 > height * 0.5) { immersed = 0.0; }

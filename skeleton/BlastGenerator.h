@@ -31,7 +31,7 @@ public:
 		float y = (ppos.y - _center.y);
 		float z = (ppos.z - _center.z);
 		double r = sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
-		_radius = ve * time;
+		//_radius = ve * time;
 		if (r < _radius) {
 			PxVec3 fforce;
 			PxVec3 center = PxVec3(x, y, z);

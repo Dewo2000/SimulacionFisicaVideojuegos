@@ -15,8 +15,10 @@
 #include"ParticleSystem.h"
 #include <iostream>
 
-
-
+std::string display_text = "SPACE TO START";
+std::string start = "KEEP ALIVE FOR 60 SECONDS";
+std::string start2 = "DO NOT TOUCH LIMITS WALL AND SPHERES";
+std::string winlose = "";
 using namespace physx;
 
 PxDefaultAllocator		gAllocator;
@@ -38,7 +40,7 @@ std::vector<Proyectil*> vP;
 //Floor* f;
 //Esfera* e;
 ParticleSystem* pSym;
-
+bool gameStart = false;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -56,14 +58,14 @@ void initPhysics(bool interactive)
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
-	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
+	sceneDesc.gravity = PxVec3(0.0f, 0.0f, 0.0f);
 	gDispatcher = PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = gDispatcher;
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	pSym = new ParticleSystem();
+	pSym = new ParticleSystem(gPhysics, gScene);
 	//pSym->testForceGenerators();
 	//pSym->testbuoyancy(1, 100);
 	//pSym->testGenerators();
@@ -71,7 +73,7 @@ void initPhysics(bool interactive)
 	//f = new Floor(Vector3(0, -10, 0));
 	//e = new Esfera(Vector3(0, 20, -100));
 	//pSym->solidRigid(gPhysics, gScene);
-	pSym->game(gPhysics, gScene);
+	//pSym->game();
 }
 
 
@@ -85,6 +87,17 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 	pSym->update(t);
+	if (gameStart && !pSym->isFinish())
+		display_text = to_string(pSym->getTime());
+	else
+		display_text = "SPACE TO START";
+	if (pSym->isFinish()) {
+		if (pSym->isWin()) {
+			winlose = "WIN";
+		}
+		else
+			winlose = "LOSE";
+	}
 	//for (Proyectil* e : vP) e->integrate(t);
 }
 
@@ -120,13 +133,50 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 	//case 'B': break;
 	//case ' ':	break;
+	case 'J':
+	{
+		pSym->goLeft();
+		break;
+	}
+	case 'L':
+	{
+		pSym->goRight();
+		break;
+	}
+	case 'K':
+	{
+		pSym->clearForce();
+		break;
+	}
+	case '1':
+	{
+		pSym->explode();
+		break;
+	}
+	case '2':
+	{
+		pSym->wind();
+		break;
+	}
+	case '3':
+	{
+		pSym->generateFireworkSystem();
+		break;
+	}
+	case '9':
+	{
+		pSym->forcedWin();
+		break;
+	}
 	case ' ':
 	{
+		pSym->cleanScene();
+		gameStart = true;
+		winlose = "";
 		break;
 	}
 	case 'F':
 	{
-		pSym->activateTwister();
 		break;
 	}
 		
