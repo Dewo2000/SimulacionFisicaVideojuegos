@@ -38,6 +38,7 @@
 extern std::string display_text;
 extern std::string start;
 extern std::string start2;
+extern std::string start3;
 extern std::string winlose;
 #if PX_WINDOWS
 #include <windows.h>

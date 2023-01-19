@@ -18,6 +18,7 @@
 std::string display_text = "SPACE TO START";
 std::string start = "KEEP ALIVE FOR 60 SECONDS";
 std::string start2 = "DO NOT TOUCH LIMITS WALL AND SPHERES";
+std::string start3 = "KEY 1&2 FOR SKILL,ONCE PER GAME,PENALTY IF BOTH IS USED";
 std::string winlose = "";
 using namespace physx;
 
